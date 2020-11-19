@@ -5,6 +5,7 @@ jobs:
       - image: circleci/python:3.6.4
     steps:
       - checkout
-      - command:  |
-          pip install pipenv
-          pipenv install
+      -run:
+        - command:  |
+            pip install pipenv
+            pipenv install
