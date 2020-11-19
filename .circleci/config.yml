@@ -1,6 +1,7 @@
 version: 2
 jobs:
   build:
+    working_directory: ~/Project---Data-Structures-and-Algorithms-Visualizer
     docker:
       - image: circleci/python:3.6.4
     steps:
