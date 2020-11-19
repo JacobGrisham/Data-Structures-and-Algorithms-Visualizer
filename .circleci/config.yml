@@ -7,6 +7,6 @@ jobs:
     steps:
       - checkout
       - run:
-        - command:  |
+        - command:
             pip install pipenv
             pipenv install
