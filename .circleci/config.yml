@@ -1,12 +1,15 @@
 version: 2
 jobs:
-  build:
-    working_directory: ~/Project---Data-Structures-and-Algorithms-Visualizer
+  run_basic:
     docker:
       - image: circleci/python:3.6.4
     steps:
       - checkout
       - run:
-        - command:
-            pip install pipenv
-            pipenv install
+        name: Install Python Dependencies
+        command:  |
+          pip install --user -r requirements.txt
+workflows:
+  build_basic:
+    jobs:
+      - run_basic
