@@ -1,4 +1,5 @@
 # Data Structures and Algorithms Visualizer: Full-Stack Web App using Flask
+[![<JacobGrisham>](https://circleci.com/gh/JacobGrisham/Data-Structures-and-Algorithms-Visualizer.svg?style=svg)](https://app.circleci.com/pipelines/github/JacobGrisham/Data-Structures-and-Algorithms-Visualizer)
 ### Final Project from [Harvard's Introduction to Computer Science CS50 hosted on eDX](https://www.edx.org/course/cs50s-introduction-to-computer-science)
 ### 🎓 [Final Project](https://cs50.harvard.edu/x/2020/project/)
 - The climax of this course is its final project. I chose to create a web-based application using JavaScript, Python, and SQL.
