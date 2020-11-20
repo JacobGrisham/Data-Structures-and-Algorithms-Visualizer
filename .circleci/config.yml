@@ -6,6 +6,6 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Install Python Dependencies
-        command:  |
-          pip install --user -r requirements.txt
+          name: Install Python Dependencies
+          command:  |
+            pip install --user -r requirements.txt
