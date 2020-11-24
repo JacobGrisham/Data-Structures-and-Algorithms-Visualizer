@@ -5,7 +5,8 @@
 - The climax of this course is its final project. I chose to create a web-based application using JavaScript, Python, and SQL.
 
 ## 💡Lessons Learned
-- 
+- D3 Data Visualization
+- CircleCI integration with Jira
 
 ## 🚀 Getting Started
 To run this project locally:
