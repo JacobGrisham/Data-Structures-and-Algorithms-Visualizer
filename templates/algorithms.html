@@ -5,5 +5,41 @@
 {% endblock %}
 
 {% block main %}
-  <h1>Algorithms</h1>
+  <nav class="navbar">
+    <a href="/"class="navbar-brand btn btn-outline-light text-white">Home</a>
+      <ul class="navbar-nav">
+        <li class="nav-item nav-link">
+          <button onclick="newData()" class="btn btn-outline-light">Create New Data Set</button>
+        </li>
+        <li class="nav-item nav-link">
+          <form class="form-inline" id="linear-search-form">
+            <input id="linear-search-input" type="number" min="0" max="1000">
+            <button id="linear-search-button" class="btn btn-outline-light" type="submit">Linear Search</button>
+          </form>
+        </li>
+        <li class="nav-item nav-link">
+          <button onclick="binarySearch()" class="btn btn-outline-light">Binary Search</button>
+        </li>
+        <li class="nav-item nav-link">
+          <button onclick="bubbleSort()" class="btn btn-outline-light">Bubble Sort</button>
+        </li>
+        <li class="nav-item nav-link">
+          <button onclick="selectionSort()" class="btn btn-outline-light">Selection Sort</button>
+        </li>
+        <li class="nav-item nav-link">
+          <button onclick="mergeSort()" class="btn btn-outline-light">Merge Sort</button>
+        </li>
+        <li class="nav-item nav-link">
+          <button onclick="insertionSort()" class="btn btn-outline-light">Insertion Sort</button>
+        </li>
+      </ul>
+  </nav>
+
+  <svg id="linear-search"></svg>
+{% endblock %}
+
+
+{% block script %}
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="../static/js/algorithms.js"></script>
 {% endblock %}

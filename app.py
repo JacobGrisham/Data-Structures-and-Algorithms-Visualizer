@@ -12,6 +12,14 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 def index():
   return render_template("index.html")
 
+@app.route("/algorithms")
+def algorithms():
+  return render_template("algorithms.html")
+
+@app.route("/data-structures")
+def datastructures():
+  return render_template("data-structures.html")
+
 @app.errorhandler(404)
 def pageNotFound(error):
     return render_template('404.html'), 404

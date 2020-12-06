@@ -1,7 +1,57 @@
-p {
-  font-family: 'Catamaran', sans-serif;
+/* -------------------------------------- */
+/* BASE */
+/* -------------------------------------- */
+body {
+  background-color: rgb(32, 32, 32);
+  color: rgb(250,250,250);
+  font-family: 'Lato', sans-serif;
 }
 
-h1 {
-  font-family: 'Lato', sans-serif;
+h2, a, p {
+  color: rgb(200,200,200)
+}
+
+.img-fluid {
+  max-width: 50%;
+  height: auto;
+}
+
+/* -------------------------------------- */
+/* INDEX */
+/* -------------------------------------- */
+
+#index-nav {
+  writing-mode: vertical-rl;
+  position: fixed;
+  right: 0;
+}
+
+/* -------------------------------------- */
+/* Aglorithms NAV and DATA-STRUCTURES NAV */
+/* -------------------------------------- */
+
+.navbar-nav {
+  flex-direction: row;
+}
+
+/* -------------------------------------- */
+/* Aglorithms and DATA-STRUCTURES */
+/* -------------------------------------- */
+svg {
+  margin: 0 auto;
+  display: block;
+}
+
+.bar {
+  fill: white;
+}
+
+.tooltip {
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+  color: white;
+  background-color: grey;
+  border: 2px solid black;
+  padding: 2rem;
 }
