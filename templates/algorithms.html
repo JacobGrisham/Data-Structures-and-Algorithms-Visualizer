@@ -8,9 +8,9 @@
   <nav class="navbar">
     <a href="/"class="navbar-brand btn btn-outline-light text-white">Home</a>
       <ul class="navbar-nav">
-        <li class="nav-item nav-link">
-          <button onclick="newData()" class="btn btn-outline-light">Create New Data Set</button>
-        </li>
+        <!-- <li class="nav-item nav-link">
+          <button id="new-data" class="btn btn-outline-light">Create New Data Set</button>
+        </li> -->
         <li class="nav-item nav-link">
           <form class="form-inline" id="linear-search-form">
             <input id="linear-search-input" type="number" min="0" max="1000">
@@ -18,24 +18,24 @@
           </form>
         </li>
         <li class="nav-item nav-link">
-          <button onclick="binarySearch()" class="btn btn-outline-light">Binary Search</button>
+          <button id="binary-search" class="btn btn-outline-light">Binary Search</button>
         </li>
         <li class="nav-item nav-link">
-          <button onclick="bubbleSort()" class="btn btn-outline-light">Bubble Sort</button>
+          <button id="bubble-sort" class="btn btn-outline-light">Bubble Sort</button>
         </li>
         <li class="nav-item nav-link">
-          <button onclick="selectionSort()" class="btn btn-outline-light">Selection Sort</button>
+          <button id="selection-sort" class="btn btn-outline-light">Selection Sort</button>
         </li>
         <li class="nav-item nav-link">
-          <button onclick="mergeSort()" class="btn btn-outline-light">Merge Sort</button>
+          <button id="merge-sort" class="btn btn-outline-light">Merge Sort</button>
         </li>
         <li class="nav-item nav-link">
-          <button onclick="insertionSort()" class="btn btn-outline-light">Insertion Sort</button>
+          <button id="insertion-sort" class="btn btn-outline-light">Insertion Sort</button>
         </li>
       </ul>
   </nav>
 
-  <svg id="linear-search"></svg>
+  <svg></svg>
 {% endblock %}
 
 
