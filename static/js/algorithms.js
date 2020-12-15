@@ -23,7 +23,7 @@ function getRandomInt(max) {
 for (var i = 0; i < n; i++){
   array.push(getRandomInt(1000));
 }
-let len = array.length;
+var len = array.length;
 console.log(array);
 
 // --------------------------------------
@@ -105,6 +105,58 @@ d3.select(window).on("load", drawGraph(array));
 
 
 // --------------------------------------
+// Unsort
+// --------------------------------------
+
+d3.select("#unsort").on("click", () => {
+  // Prevent page from reloading
+  d3.event.preventDefault();
+
+  // Fisher-Yates Shuffling
+  var m = array.length, t, i;
+
+  // While there remain elements to shuffle…
+  while (m) {
+
+    // Pick a remaining element…
+    i = Math.floor(Math.random() * m--);
+
+    // And swap it with the current element.
+    t = array[m];
+    array[m] = array[i];
+    array[i] = t;
+  }
+
+  drawGraph(array)
+
+  console.log("This shouldn't change: ", array);
+
+  return array;
+
+});
+
+// --------------------------------------
+// New Data
+// --------------------------------------
+
+d3.select("#new-data").on("click", () => {
+  // Prevent page from reloading
+  d3.event.preventDefault();
+
+  var array = [];
+
+  for (var i = 0; i < n; i++){
+    array.push(getRandomInt(1000));
+  }
+
+  drawGraph(array)
+
+  console.log(array);
+
+  return array;
+});
+
+// --------------------------------------
 // Linear Search
 // --------------------------------------
 
@@ -113,7 +165,7 @@ d3.select("#linear-search-form").on("submit", () => {
   d3.event.preventDefault();
 
   // Obtain input from user
-  var input = document.getElementById("linear-search-input").value
+  let input = document.getElementById("linear-search-input").value
 
   function getInput(num) {return num == parseInt(input)}
   // Color bar blue if matched
@@ -123,22 +175,19 @@ d3.select("#linear-search-form").on("submit", () => {
       });
 
   // Begin run-time stopwatch
-  var start = window.performance.now();
+  let start = window.performance.now();
 
   // Iterate over data
-  for (var i = 0; i < n; i++){
+  for (let i = 0; i < n; i++){
     
     if (array[i] == input) {
       console.log("found ", input);
       break
     }
-    else {
-      console.log("not found ", input);
-    }
   }
 
   // End run-time stopwatch
-  var end = window.performance.now();
+  let end = window.performance.now();
   d3.select("body").append("div")
     .text(`Linear Search Execution time: ${end - start} ms. Big-O O(n), Omega Ω(1)`);
 
@@ -153,29 +202,41 @@ d3.select("#binary-search-form").on("submit", () => {
   // Prevent page from reloading
   d3.event.preventDefault();
 
-  // Begin run-time stopwatch
-  var start = window.performance.now();
+  // Obtain input from user
+  let input = document.getElementById("linear-search-input").value
 
-  let start = 0, end = len - 1; 
-          
-  // Iterate while start not meets end 
-  while (start <= end) { 
+  function getInput(num) {return num == parseInt(input)}
+  // Color bar blue if matched
+  d3.selectAll(".bar")
+      .style("fill", function(_,idx) {
+        return idx === array.findIndex(getInput) ? "red" : "grey";
+      });
+
+  // Begin run-time stopwatch
+  let start = window.performance.now();
+
+  let arrayStart = 0, arrayEnd = len - 1;      
+  // Iterate while arrayStart is greater than arrayEnd 
+  while (arrayStart <= arrayEnd) { 
 
       // Find the mid index 
-      let mid = Math.floor((start + end)/2); 
+      let mid = Math.floor((arrayStart + arrayEnd)/2); 
 
       // If element is present at mid, return True 
-      if (array[mid] === x) return true; 
+      if (array[mid] === parseInt(input)){
+        console.log("found ", input)
+        return true;
+      }
 
       // Else look in left or right half accordingly 
-      else if (array[mid] < x)  
-            start = mid + 1; 
+      else if (array[mid] < parseInt(input))
+            arrayStart = mid + 1;
       else
-            end = mid - 1; 
+            arrayEnd = mid - 1;
   } 
    
   // End run-time stopwatch
-  var end = window.performance.now();
+  let end = window.performance.now();
   d3.select("body").append("div")
     .text(`Binary Search Execution time: ${end - start} ms. Big-O O(log n), Omega Ω(1)`);
   
@@ -190,34 +251,8 @@ d3.select("#bubble-sort").on("click", () => {
   // Prevent page from reloading
   d3.event.preventDefault();
 
-  var yScale = d3.scaleLinear()
-                  .domain([0, Math.max(...array)])
-                  .range([height, 0]);
-
-  var bars = d3.select("svg")
-                .attr("width", width)
-                .attr("height", height)
-                .selectAll(".bar")
-                .data(array)
-
-  var g = bars
-    .enter()
-    .append("g")
-      .classed("bar", true)
-
-  bars
-  .exit()
-  .remove();
-
-  g.merge(bars)
-    .select("rect")
-    .attr("x", (d, i) => {return (barWidth + barPadding) * i})
-    .attr("y", (d) => {return yScale(d)})
-    .attr("height", (d) => {return height - yScale(d)})
-    .attr("width", (d) => barWidth);
-
   // Begin run-time stopwatch
-  var start = window.performance.now();
+  let start = window.performance.now();
 
   let swapped;
   do {
@@ -235,7 +270,7 @@ d3.select("#bubble-sort").on("click", () => {
   console.log(array);
 
   // End run-time stopwatch
-  var end = window.performance.now();
+  let end = window.performance.now();
   d3.select("body").append("div")
     .text(`Bubble Sort Execution time: ${end - start} ms. Big-O O(n squared), Omega Ω(n)`);
   
@@ -252,7 +287,7 @@ d3.select("#selection-sort").on("click", () => {
   d3.event.preventDefault();
 
   // Begin run-time stopwatch
-  var start = window.performance.now();
+  let start = window.performance.now();
   
   // Run Selection Sort Algorithm
   for (let i = 0; i < len; i++) {
@@ -268,9 +303,10 @@ d3.select("#selection-sort").on("click", () => {
           array[min] = tmp;
       }
   }
+  console.log(array);
 
   // End run-time stopwatch
-  var end = window.performance.now();
+  let end = window.performance.now();
   d3.select("body").append("div")
     .text(`Insertion Sort Execution time: ${end - start} ms. Theta ϴ(n squared)`);
 
@@ -288,33 +324,53 @@ d3.select("#merge-sort").on("click", () => {
   d3.event.preventDefault();
 
   // Begin run-time stopwatch
-  var start = window.performance.now();
+  let start = window.performance.now();
 
-  // Run Merge Sort Algorithm
-  const middleIdx = Math.floor(array.length / 2);
-  const firstHalf = mergeSort(array.slice(0, middleIdx));
-  const secondHalf = mergeSort(array.slice(middleIdx));
-  const sortedArray = [];
-  let i = 0, j = 0;
-  while (i < firstHalf.length && secondHalf.length){
-    if (firstHalf[i] < secondHalf[j]) {
-      sortedArray.push(firstHalf[i++]);
-    } else {
-      sortedArray.push(secondHalf[j++]);
+  function merge(left, right){
+    let arr = []
+    // Break out of loop if any one of the array gets empty
+    while (left.length && right.length) {
+        // Pick the smaller among the smallest element of left and right sub arrays 
+        if (left[0] < right[0]) {
+            arr.push(left.shift())  
+        } else {
+            arr.push(right.shift()) 
+        }
     }
+    console.log(arr)
+    console.log(left)
+    console.log(right)
+
+    // Concatenating the leftover elements
+    // (in case we didn't go through the entire left or right array)
+    return [ ...arr, ...left, ...right ]
   }
-  while (i < firstHalf.length) sortedArray.push(firstHalf([i++]));
-  while (j < secondHalf.length) sortedArray.push(secondHalf[j++]);
-  console.log(sort)
+  
+  function mergeSort(array) {
+    let half = array.length / 2
+    console.log(half)
+  
+    // Base case or terminating case
+    if(array.length < 2){
+      return array 
+    }
+    
+    let left = array.splice(0, half)
+    console.log(left)
+
+    return merge(mergeSort(left),mergeSort(array))
+  }
+
+  mergeSort(array);
+
+  console.log(array)
 
   // End run-time stopwatch
-  var end = window.performance.now();
+  let end = window.performance.now();
   d3.select("body").append("div")
     .text(`Merge Sort Execution time: ${end - start} ms. Theta ϴ(n log n)`);
   
   drawGraph(array)
-
-  return sortedArray;
 
 });
 
@@ -327,7 +383,7 @@ d3.select("#insertion-sort").on("click", () => {
   d3.event.preventDefault();
 
   // Begin run-time stopwatch
-  var start = window.performance.now();
+  let start = window.performance.now();
 
   // Run Insertion Sort Algorithm
   for (let i = 1; i < len; i++) {
@@ -339,9 +395,10 @@ d3.select("#insertion-sort").on("click", () => {
       }
       array[j + 1] = key;
   }
+  console.log(array);
 
   // End run-time stopwatch
-  var end = window.performance.now();
+  let end = window.performance.now();
   d3.select("body").append("div")
     .text(`Insertion Sort Execution time: ${end - start} ms. Big-O O(1), Omega Ω`);
   
