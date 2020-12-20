@@ -1,15 +1,15 @@
 // --------------------------------------
 // Global Variables
 // --------------------------------------
-var width = 600;
-var height = 600;
-var padding = 50;
-var barPadding = 1;
-var svg = d3.select("svg")
+const width = 600;
+const height = 600;
+const padding = 50;
+const barPadding = 1;
+const svg = d3.select("svg")
               .attr("width", width)
               .attr("height", height);
 var array = [];
-n = 100;
+const n = 100;
 var barWidth = width / n - barPadding;
 
 // --------------------------------------
@@ -19,12 +19,21 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
-// Create random number array
+// Create initial random number array
 for (var i = 0; i < n; i++){
   array.push(getRandomInt(1000));
 }
 var len = array.length;
 console.log(array);
+
+// Reset color of bars
+function colorReset(){
+  for (var i = 0; i < n; i++){
+    d3.selectAll(".bar")
+          .select("#bar_" + [i])
+          .style("fill", "white");
+  }
+}
 
 // --------------------------------------
 // Draw Graph
@@ -69,7 +78,8 @@ g.merge(bars)
   .attr("x", (d, i) => {return (barWidth + barPadding) * i})
   .attr("y", (d) => {return yScale(d)})
   .attr("height", (d) => {return height - yScale(d)})
-  .attr("width", (d) => barWidth);
+  .attr("width", (d) => barWidth)
+  .attr("id", function(d, i) {return 'bar_' + i});
 }
 
 d3.select(window).on("load", drawGraph(array));
@@ -129,7 +139,7 @@ d3.select("#unsort").on("click", () => {
 
   drawGraph(array)
 
-  console.log("This shouldn't change: ", array);
+  console.log("The array values shouldn't change, only their positions: ", array);
 
   return array;
 
@@ -143,13 +153,16 @@ d3.select("#new-data").on("click", () => {
   // Prevent page from reloading
   d3.event.preventDefault();
 
-  var array = [];
+  array = [];
 
   for (var i = 0; i < n; i++){
     array.push(getRandomInt(1000));
   }
 
-  drawGraph(array)
+  // Reset color of bars
+  colorReset()
+
+  drawGraph(array);
 
   console.log(array);
 
@@ -164,25 +177,38 @@ d3.select("#linear-search-form").on("submit", () => {
   // Prevent page from reloading
   d3.event.preventDefault();
 
+  // Reset color of bars
+  colorReset()
+
   // Obtain input from user
   let input = document.getElementById("linear-search-input").value
-
-  function getInput(num) {return num == parseInt(input)}
-  // Color bar blue if matched
-  d3.selectAll(".bar")
-      .style("fill", function(_,idx) {
-        return idx === array.findIndex(getInput) ? "red" : "grey";
-      });
 
   // Begin run-time stopwatch
   let start = window.performance.now();
 
   // Iterate over data
   for (let i = 0; i < n; i++){
+
+    // Convert index number
+    function getIndex(num) {return num == parseInt(array[i])}
     
-    if (array[i] == input) {
+    if (array[i] === parseInt(input)) {
+
+      // Color bar red if matched
+      d3.selectAll(".bar")
+          .select("#bar_" + array.findIndex(getIndex))
+          .style("fill", "red");
+      
       console.log("found ", input);
+
+      // Stop for loop
       break
+    }
+    else {
+      d3.selectAll(".bar")
+          .select("#bar_" + i)
+          .style("fill", "grey");
+      console.log(`array[i]`, array[i])
     }
   }
 
@@ -202,38 +228,64 @@ d3.select("#binary-search-form").on("submit", () => {
   // Prevent page from reloading
   d3.event.preventDefault();
 
-  // Obtain input from user
-  let input = document.getElementById("linear-search-input").value
+  // Reset color of bars
+  colorReset()
 
-  function getInput(num) {return num == parseInt(input)}
-  // Color bar blue if matched
-  d3.selectAll(".bar")
-      .style("fill", function(_,idx) {
-        return idx === array.findIndex(getInput) ? "red" : "grey";
-      });
+  // Obtain input from user
+  let input = document.getElementById("binary-search-input").value
 
   // Begin run-time stopwatch
   let start = window.performance.now();
 
-  let arrayStart = 0, arrayEnd = len - 1;      
+  let arrayStart = 0, arrayEnd = len - 1, i = 0;     
   // Iterate while arrayStart is greater than arrayEnd 
-  while (arrayStart <= arrayEnd) { 
+  while (i < n){
+    // Find the mid index 
+    let mid = Math.floor((arrayStart + arrayEnd)/2); 
 
-      // Find the mid index 
-      let mid = Math.floor((arrayStart + arrayEnd)/2); 
+    // If element is present at mid, return True 
+    if (array[mid] === parseInt(input)){
+        // Convert insput string to number
+        function getInput(num) {return num == parseInt(input)}
 
-      // If element is present at mid, return True 
-      if (array[mid] === parseInt(input)){
-        console.log("found ", input)
-        return true;
-      }
+      // Color bar red if matched
+      d3.selectAll(".bar")
+          .select("#bar_" + array.findIndex(getInput))
+          .style("fill", "red");
+      
+      // Stop while loop
+      i = n;
+      console.log("found ", input)
+    }
 
-      // Else look in left or right half accordingly 
-      else if (array[mid] < parseInt(input))
-            arrayStart = mid + 1;
-      else
-            arrayEnd = mid - 1;
-  } 
+    // Else look in left or right half accordingly 
+    else if (array[mid] < parseInt(input)){
+      // Look right of sorted array
+      arrayStart = mid + 1;
+      d3.selectAll(".bar")
+          .select("#bar_" + arrayStart)
+          .style("fill", "grey");
+
+      // Increment i to prevent while loop
+      i++;
+
+      // Check value in console
+      console.log("arrayStart", arrayStart)
+    }
+    else {
+      // Look left of sorted array
+      arrayEnd = mid - 1;
+      d3.selectAll(".bar")
+          .select("#bar_" + arrayEnd)
+          .style("fill", "grey");
+        
+      // Increment i to prevent while loop
+      i++;
+
+      // Check value in console
+      console.log("arrayEnd", arrayEnd)
+    }
+  }
    
   // End run-time stopwatch
   let end = window.performance.now();
@@ -251,6 +303,9 @@ d3.select("#bubble-sort").on("click", () => {
   // Prevent page from reloading
   d3.event.preventDefault();
 
+  // Reset color of bars
+  colorReset()
+
   // Begin run-time stopwatch
   let start = window.performance.now();
 
@@ -259,22 +314,39 @@ d3.select("#bubble-sort").on("click", () => {
     swapped = false;
     for (let i = 0; i < len; i++) {
       if (array[i] > array[i + 1]) {
-        let first = array[i];
-        let second = array[i + 1];
-        array[i] = second;
-        array[i + 1] = first;
+        setTimeout (() => {
+          let first = array[i];
+          console.log("first", first)
+          array[i + 1] = first;
+          d3.selectAll(".bar")
+          .select("#bar_" + [i])
+          .style("fill", "blue");
+        }, (i * 100))
+        setTimeout(() => {
+          let second = array[i + 1];
+          console.log("second", second)
+          array[i] = second;
+          d3.selectAll(".bar")
+          .select("#bar_" + [i + 1])
+          .style("fill", "green");
+        }, (i + 1) * 100)
         swapped = true;
+        drawGraph(array)
       }
     }
   } while (swapped);
-  console.log(array);
 
   // End run-time stopwatch
   let end = window.performance.now();
   d3.select("body").append("div")
     .text(`Bubble Sort Execution time: ${end - start} ms. Big-O O(n squared), Omega Ω(n)`);
   
-  drawGraph(array)
+  console.log(array);
+  // for (let i = 0; i < n; i++) {
+  // d3.selectAll(".bar")
+  //   .select("#bar_" + [i])
+  //     .style("fill", "white");
+  // }
   return array;
 });
 
@@ -285,6 +357,9 @@ d3.select("#bubble-sort").on("click", () => {
 d3.select("#selection-sort").on("click", () => {
   // Prevent page from reloading
   d3.event.preventDefault();
+
+  // Reset color of bars
+  colorReset()
 
   // Begin run-time stopwatch
   let start = window.performance.now();
@@ -322,6 +397,9 @@ d3.select("#selection-sort").on("click", () => {
 d3.select("#merge-sort").on("click", () => {
   // Prevent page from reloading
   d3.event.preventDefault();
+
+  // Reset color of bars
+  colorReset()
 
   // Begin run-time stopwatch
   let start = window.performance.now();
@@ -382,6 +460,9 @@ d3.select("#insertion-sort").on("click", () => {
   // Prevent page from reloading
   d3.event.preventDefault();
 
+  // Reset color of bars
+  colorReset()
+
   // Begin run-time stopwatch
   let start = window.performance.now();
 
@@ -400,7 +481,7 @@ d3.select("#insertion-sort").on("click", () => {
   // End run-time stopwatch
   let end = window.performance.now();
   d3.select("body").append("div")
-    .text(`Insertion Sort Execution time: ${end - start} ms. Big-O O(1), Omega Ω`);
+    .text(`Insertion Sort Execution time: ${end - start} ms. Big-O O(1), Omega Ω(n)`);
   
   drawGraph(array)
 
