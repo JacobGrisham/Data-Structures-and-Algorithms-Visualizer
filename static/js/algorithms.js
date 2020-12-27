@@ -11,6 +11,10 @@ const svg = d3.select("svg")
 var array = [];
 const n = 100;
 var barWidth = width / n - barPadding;
+var xScale = d3.scaleLinear()
+                .domain([0, n])
+                .range([0, width]);
+const animationDuration = 1000;
 
 // --------------------------------------
 // Global Functions
@@ -35,6 +39,14 @@ function colorReset(){
   }
 }
 
+// Animate bars sliding from original position to final position
+function slide(i) {
+    d3.select("#bar_" + i)
+      .transition()
+      .duration(100)
+      .attr("transform", (i) => {return "translate(" + xScale(i + 1) + ", 0)"});
+}
+
 // --------------------------------------
 // Draw Graph
 // --------------------------------------
@@ -50,68 +62,53 @@ var yScale = d3.scaleLinear()
 //   console.log("height - yScale: ", height - yScale(array[i]));
 // }
 
-// Create bars variable
+
+var xScale = d3.scaleLinear()
+                .domain([0, n])
+                .range([0, width]);
+
+// for (var i = 0; i < n; i++){
+//   console.log("xScale - (barWidth + barPadding): ", (xScale(i)) - (barWidth + barPadding));
+// }
+
 var bars = d3.select("svg")
                 .attr("width", width)
                 .attr("height", height)
-              .selectAll(".bar")
-              .data(array)
+                .selectAll(".bar")
+                .data(array)
 
 var g = bars
           .enter()
           .append("g")
             .classed("bar", true)
 
-bars
-  .exit()
-  .remove();
-
 // Draw rectangles
 g.append("rect")
-  .attr("x", (d, i) => {return (barWidth + barPadding) * i})
+  .attr("transform", function(d, i) {return "translate(" + (xScale(i) - (barWidth + barPadding)) + ",0)"})
   .attr("y", (d) => {return yScale(d)})
   .attr("height", (d) => {return height - yScale(d)})
   .attr("width", (d) => barWidth);
 
+  // .attr("x", (d, i) => {return (barWidth + barPadding) * i})
+
+bars
+.exit()
+.remove();
+
 g.merge(bars)
   .select("rect")
-  .attr("x", (d, i) => {return (barWidth + barPadding) * i})
+  .attr("transform", function(d, i) {return "translate(" + (xScale(i) - (barWidth + barPadding)) + ",0)"})
   .attr("y", (d) => {return yScale(d)})
   .attr("height", (d) => {return height - yScale(d)})
   .attr("width", (d) => barWidth)
   .attr("id", function(d, i) {return 'bar_' + i});
 }
 
+// When you press unsort or new data
+// .transition()
+// .delay(function(d, i) { return i * 5; })
+
 d3.select(window).on("load", drawGraph(array));
-
-// --------------------------------------
-// Draw New Graph
-// --------------------------------------
-
-// d3.select("#new-data").on("click", () => {
-
-//   newArray = [];
-//   // Create random number array
-//   for (var i = 0; i < n; i++){
-//     newArray.push(getRandomInt(1000));
-//   }
-//   console.log(newArray);
-
-//   d3.select("svg")
-//     .selectAll(".bar")
-//     .data(newArray)
-//     .enter()
-//     .append("g")
-//       classed("bar", true)
-//     .append("rect")
-//       .attr("x", (d, i) => {return (barWidth + barPadding) * i})
-//       .attr("y", (d) => {return height - yScale(d)})
-//       .attr("height", (d) => {return yScale(d)})
-//       .attr("width", (d) => barWidth);
-
-//   // General Update Pattern: remove old data
-//   d3.select("new-data").remove();
-// });
 
 
 // --------------------------------------
@@ -122,16 +119,19 @@ d3.select("#unsort").on("click", () => {
   // Prevent page from reloading
   d3.event.preventDefault();
 
+  // Reset color of bars
+  colorReset()
+
   // Fisher-Yates Shuffling
   var m = array.length, t, i;
 
-  // While there remain elements to shuffle…
+  // While there remain elements to shuffle
   while (m) {
 
-    // Pick a remaining element…
+    // Pick a remaining element
     i = Math.floor(Math.random() * m--);
 
-    // And swap it with the current element.
+    // And swap it with the current element
     t = array[m];
     array[m] = array[i];
     array[i] = t;
@@ -140,8 +140,6 @@ d3.select("#unsort").on("click", () => {
   drawGraph(array)
 
   console.log("The array values shouldn't change, only their positions: ", array);
-
-  return array;
 
 });
 
@@ -165,8 +163,6 @@ d3.select("#new-data").on("click", () => {
   drawGraph(array);
 
   console.log(array);
-
-  return array;
 });
 
 // --------------------------------------
@@ -197,6 +193,8 @@ d3.select("#linear-search-form").on("submit", () => {
       // Color bar red if matched
       d3.selectAll(".bar")
           .select("#bar_" + array.findIndex(getIndex))
+          .transition()
+          .delay(function(d, i) { return i * 10; })
           .style("fill", "red");
       
       console.log("found ", input);
@@ -207,6 +205,8 @@ d3.select("#linear-search-form").on("submit", () => {
     else {
       d3.selectAll(".bar")
           .select("#bar_" + i)
+          .transition()
+          .delay(function(d, i) { return i * 10; })
           .style("fill", "grey");
       console.log(`array[i]`, array[i])
     }
@@ -269,8 +269,7 @@ d3.select("#binary-search-form").on("submit", () => {
       // Increment i to prevent while loop
       i++;
 
-      // Check value in console
-      console.log("arrayStart", arrayStart)
+      // console.log("arrayStart", arrayStart)
     }
     else {
       // Look left of sorted array
@@ -282,8 +281,7 @@ d3.select("#binary-search-form").on("submit", () => {
       // Increment i to prevent while loop
       i++;
 
-      // Check value in console
-      console.log("arrayEnd", arrayEnd)
+      // console.log("arrayEnd", arrayEnd)
     }
   }
    
@@ -313,26 +311,23 @@ d3.select("#bubble-sort").on("click", () => {
   do {
     swapped = false;
     for (let i = 0; i < len; i++) {
-      if (array[i] > array[i + 1]) {
-        setTimeout (() => {
+      setInterval(() => {
+        if (array[i] > array[i + 1]) {
+          // Assign the values to variables
+          // First is bigger
           let first = array[i];
-          console.log("first", first)
-          array[i + 1] = first;
-          d3.selectAll(".bar")
-          .select("#bar_" + [i])
-          .style("fill", "blue");
-        }, (i * 100))
-        setTimeout(() => {
+          // Second is smaller
           let second = array[i + 1];
-          console.log("second", second)
+
+          // Make the swap
+          array[i + 1] = first;
           array[i] = second;
-          d3.selectAll(".bar")
-          .select("#bar_" + [i + 1])
-          .style("fill", "green");
-        }, (i + 1) * 100)
-        swapped = true;
-        drawGraph(array)
-      }
+
+          swapped = true;
+
+          drawGraph(array);
+        }
+      }, animationDuration)
     }
   } while (swapped);
 
@@ -340,14 +335,6 @@ d3.select("#bubble-sort").on("click", () => {
   let end = window.performance.now();
   d3.select("body").append("div")
     .text(`Bubble Sort Execution time: ${end - start} ms. Big-O O(n squared), Omega Ω(n)`);
-  
-  console.log(array);
-  // for (let i = 0; i < n; i++) {
-  // d3.selectAll(".bar")
-  //   .select("#bar_" + [i])
-  //     .style("fill", "white");
-  // }
-  return array;
 });
 
 // --------------------------------------
@@ -363,30 +350,32 @@ d3.select("#selection-sort").on("click", () => {
 
   // Begin run-time stopwatch
   let start = window.performance.now();
-  
   // Run Selection Sort Algorithm
-  for (let i = 0; i < len; i++) {
+    // Iterate through the array
+    for (let i = 0; i < len; i++) {
+      setTimeout(() => {
       let min = i;
+      // Iterate through array one step ahead of previous iteration
       for (let j = i + 1; j < len; j++) {
-          if (array[min] > array[j]) {
-              min = j;
-          }
+        // Keep track of the smallest value
+        if (array[min] > array[j]) {
+          min = j;
+        }
       }
+      // Swap places with the smallest value
       if (min !== i) {
           let tmp = array[i];
           array[i] = array[min];
           array[min] = tmp;
-      }
-  }
-  console.log(array);
+          drawGraph(array);
+        }
+    }, animationDuration)
+    }
 
   // End run-time stopwatch
   let end = window.performance.now();
   d3.select("body").append("div")
-    .text(`Insertion Sort Execution time: ${end - start} ms. Theta ϴ(n squared)`);
-
-  drawGraph(array)
-  return array;
+    .text(`Selection Sort Execution time: ${end - start} ms. Theta ϴ(n squared)`);
 });
 
 
@@ -404,52 +393,49 @@ d3.select("#merge-sort").on("click", () => {
   // Begin run-time stopwatch
   let start = window.performance.now();
 
-  function merge(left, right){
-    let arr = []
-    // Break out of loop if any one of the array gets empty
-    while (left.length && right.length) {
-        // Pick the smaller among the smallest element of left and right sub arrays 
-        if (left[0] < right[0]) {
-            arr.push(left.shift())  
-        } else {
-            arr.push(right.shift()) 
-        }
+  function mergeSort (array) {
+    // No need to sort the array if the array only has one element or empty
+    if (array.length <= 1) {
+      return array;
     }
-    console.log(arr)
-    console.log(left)
-    console.log(right)
+    // In order to divide the array in half, we need to figure out the middle
+    const middle = Math.floor(array.length / 2);
+    // This is where we will be dividing the array into left and right
+    const left = array.slice(0, middle);
+    const right = array.slice(middle);
 
-    // Concatenating the leftover elements
-    // (in case we didn't go through the entire left or right array)
-    return [ ...arr, ...left, ...right ]
-  }
-  
-  function mergeSort(array) {
-    let half = array.length / 2
-    console.log(half)
-  
-    // Base case or terminating case
-    if(array.length < 2){
-      return array 
-    }
-    
-    let left = array.splice(0, half)
-    console.log(left)
-
-    return merge(mergeSort(left),mergeSort(array))
+    // Using recursion to combine the left and right
+    return merge(mergeSort(left), mergeSort(right));
   }
 
-  mergeSort(array);
+  // Merge the two arrays: left and right
+  function merge (left, right) {
+    let resultArray = [], leftIndex = 0, rightIndex = 0;
+    // We will concatenate values into the resultArray in order
+    while (leftIndex < left.length && rightIndex < right.length) {
+      if (left[leftIndex] < right[rightIndex]) {
+        resultArray.push(left[leftIndex]);
+        leftIndex++; // move left array cursor
+        drawGraph(resultArray)
+      } else {
+        resultArray.push(right[rightIndex]);
+        rightIndex++; // move right array cursor
+        drawGraph(resultArray)
+      }
+  }
+    // We need to concat here because there will be one element remaining
+    // from either left OR the right
+    return resultArray
+    .concat(left.slice(leftIndex))
+    .concat(right.slice(rightIndex));
+  }
 
-  console.log(array)
+  array = mergeSort(array);
 
   // End run-time stopwatch
   let end = window.performance.now();
   d3.select("body").append("div")
     .text(`Merge Sort Execution time: ${end - start} ms. Theta ϴ(n log n)`);
-  
-  drawGraph(array)
-
 });
 
 // --------------------------------------
@@ -468,22 +454,24 @@ d3.select("#insertion-sort").on("click", () => {
 
   // Run Insertion Sort Algorithm
   for (let i = 1; i < len; i++) {
+    setInterval(() => {
       let key = array[i];
       let j = i - 1;
+      // if previous value is greater than current value, swap
       while (j >= 0 && array[j] > key) {
+        // Swap values
           array[j + 1] = array[j];
           j = j - 1;
+          drawGraph(array);
       }
       array[j + 1] = key;
+    }, animationDuration)
   }
-  console.log(array);
 
   // End run-time stopwatch
   let end = window.performance.now();
   d3.select("body").append("div")
-    .text(`Insertion Sort Execution time: ${end - start} ms. Big-O O(1), Omega Ω(n)`);
-  
-  drawGraph(array)
+    .text(`Insertion Sort Execution time: ${end - start} ms. Big-O O(n squared), Omega Ω(n)`);
 
-  return array;
+  console.log(array);
 });
