@@ -32,20 +32,53 @@ console.log(array);
 
 // Reset color of bars
 function colorReset(){
-  for (var i = 0; i < n; i++){
-    d3.selectAll(".bar")
-          .select("#bar_" + [i])
-          .style("fill", "white");
+  for (var i = 0; i < len; i++){
+    d3.select("#bar_" + i)
+        .style("fill", "white");
   }
 }
 
 // Animate bars sliding from original position to final position
-function slide(i) {
-    d3.select("#bar_" + i)
-      .transition()
-      .duration(100)
-      .attr("transform", (i) => {return "translate(" + xScale(i + 1) + ", 0)"});
+// function slide(i) {
+//     d3.select("#bar_" + i)
+//       .transition()
+//       .duration(100)
+//       .attr("transform", (i) => {return "translate(" + xScale(i + 1) + ", 0)"});
+// }
+
+function addCard(algorithm, end, start, bigO){
+  d3.select("#runtimes")
+  .append("div")
+  .html(
+    `<div class="card mx-2" style="width: 18rem;">
+      <div class="card-body">
+        <div class="card-header"> ${algorithm} Execution Time</div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"> ${end - start} ms </li>
+            <li class="list-group-item"> ${bigO} </li>
+          </ul>
+      </div>
+    </div>`
+)}
+
+function addTable(array){
+// Erase any old data from table
+d3.selectAll("td")
+  .remove();
+
+// Iteratively add data cells
+for (i = 0; i < len; i++) {
+  d3.select("#data")
+    .append("td")
+    .text(array[i]);
+  }
 }
+
+// Initialize first graph
+d3.select(window).on("load", drawGraph(array));
+
+// Initialize first data table
+d3.select(window).on("load", addTable(array));
 
 // --------------------------------------
 // Draw Graph
@@ -57,19 +90,10 @@ function drawGraph(array) {
 var yScale = d3.scaleLinear()
                .domain([0, Math.max(...array)])
                .range([height, 0]);
-// Checking output of yScale
-// for (var i = 0; i < n; i++){
-//   console.log("height - yScale: ", height - yScale(array[i]));
-// }
-
 
 var xScale = d3.scaleLinear()
                 .domain([0, n])
                 .range([0, width]);
-
-// for (var i = 0; i < n; i++){
-//   console.log("xScale - (barWidth + barPadding): ", (xScale(i)) - (barWidth + barPadding));
-// }
 
 var bars = d3.select("svg")
                 .attr("width", width)
@@ -78,37 +102,46 @@ var bars = d3.select("svg")
                 .data(array)
 
 var g = bars
-          .enter()
-          .append("g")
-            .classed("bar", true)
+                .enter()
+                .append("g")
+                  .classed("bar", true)
+
+// Create a tooltip
+var tooltip = d3.select("#tooltip")
+                .append("div")
+                .style("opacity", 0)
+                .attr("class", "tooltip")
 
 // Draw rectangles
 g.append("rect")
   .attr("transform", function(d, i) {return "translate(" + (xScale(i) - (barWidth + barPadding)) + ",0)"})
   .attr("y", (d) => {return yScale(d)})
   .attr("height", (d) => {return height - yScale(d)})
-  .attr("width", (d) => barWidth);
+  .attr("width", (d) => barWidth)
+  .on("mousemove", (d, i) => {  tooltip.transition().duration(100).style("opacity", .9);      
+  tooltip.html(d).style("left", (d3.event.pageX) + "px").style("top", (d3.event.pageY) + "px")})
+  .on("mouseleave", d => {tooltip.transition() .duration(300) .style("opacity", 0)});
 
   // .attr("x", (d, i) => {return (barWidth + barPadding) * i})
 
+// Remove old data
 bars
 .exit()
 .remove();
 
+// Update data
 g.merge(bars)
   .select("rect")
   .attr("transform", function(d, i) {return "translate(" + (xScale(i) - (barWidth + barPadding)) + ",0)"})
   .attr("y", (d) => {return yScale(d)})
   .attr("height", (d) => {return height - yScale(d)})
   .attr("width", (d) => barWidth)
-  .attr("id", function(d, i) {return 'bar_' + i});
+  .attr("id", function(d, i) {return 'bar_' + i})
 }
 
 // When you press unsort or new data
 // .transition()
 // .delay(function(d, i) { return i * 5; })
-
-d3.select(window).on("load", drawGraph(array));
 
 
 // --------------------------------------
@@ -118,9 +151,6 @@ d3.select(window).on("load", drawGraph(array));
 d3.select("#unsort").on("click", () => {
   // Prevent page from reloading
   d3.event.preventDefault();
-
-  // Reset color of bars
-  colorReset()
 
   // Fisher-Yates Shuffling
   var m = array.length, t, i;
@@ -137,7 +167,9 @@ d3.select("#unsort").on("click", () => {
     array[i] = t;
   }
 
-  drawGraph(array)
+  colorReset();
+  drawGraph(array);
+  addTable(array);
 
   console.log("The array values shouldn't change, only their positions: ", array);
 
@@ -157,10 +189,9 @@ d3.select("#new-data").on("click", () => {
     array.push(getRandomInt(1000));
   }
 
-  // Reset color of bars
-  colorReset()
-
+  colorReset();
   drawGraph(array);
+  addTable(array);
 
   console.log(array);
 });
@@ -184,7 +215,6 @@ d3.select("#linear-search-form").on("submit", () => {
 
   // Iterate over data
   for (let i = 0; i < n; i++){
-
     // Convert index number
     function getIndex(num) {return num == parseInt(array[i])}
     
@@ -196,7 +226,7 @@ d3.select("#linear-search-form").on("submit", () => {
           .transition()
           .delay(function(d, i) { return i * 10; })
           .style("fill", "red");
-      
+
       console.log("found ", input);
 
       // Stop for loop
@@ -206,16 +236,19 @@ d3.select("#linear-search-form").on("submit", () => {
       d3.selectAll(".bar")
           .select("#bar_" + i)
           .transition()
+          .duration(1)
           .delay(function(d, i) { return i * 10; })
           .style("fill", "grey");
-      console.log(`array[i]`, array[i])
     }
   }
 
   // End run-time stopwatch
   let end = window.performance.now();
-  d3.select("body").append("div")
-    .text(`Linear Search Execution time: ${end - start} ms. Big-O O(n), Omega Ω(1)`);
+
+  // Append new card with runtime
+  linearSearch = "Linear Search"
+  bigO = "Big-O O(n), Omega Ω(1)"
+  addCard(linearSearch, end, start, bigO);
 
 });
 
@@ -287,8 +320,11 @@ d3.select("#binary-search-form").on("submit", () => {
    
   // End run-time stopwatch
   let end = window.performance.now();
-  d3.select("body").append("div")
-    .text(`Binary Search Execution time: ${end - start} ms. Big-O O(log n), Omega Ω(1)`);
+
+  // Append new card with runtime
+  binarySearch = "Binary Search"
+  bigO = "Big-O O(log n), Omega Ω(1)"
+  addCard(binarySearch, end, start, bigO);
   
   drawGraph(array)
   });
@@ -333,8 +369,14 @@ d3.select("#bubble-sort").on("click", () => {
 
   // End run-time stopwatch
   let end = window.performance.now();
-  d3.select("body").append("div")
-    .text(`Bubble Sort Execution time: ${end - start} ms. Big-O O(n squared), Omega Ω(n)`);
+
+  // Append new card with runtime
+  bubbleSort = "Bubble Sort"
+  bigO = "Big-O O(n squared), Omega Ω(n)"
+  addCard(bubbleSort, end, start, bigO);
+
+  // Add data table
+  addTable(array)
 });
 
 // --------------------------------------
@@ -374,8 +416,14 @@ d3.select("#selection-sort").on("click", () => {
 
   // End run-time stopwatch
   let end = window.performance.now();
-  d3.select("body").append("div")
-    .text(`Selection Sort Execution time: ${end - start} ms. Theta ϴ(n squared)`);
+
+  // Append new card with runtime
+  selectionSort = "Selection Sort"
+  bigO = "Theta ϴ(n squared)"
+  addCard(selectionSort, end, start, bigO);
+
+  // Add data table
+  addTable(array)
 });
 
 
@@ -434,8 +482,14 @@ d3.select("#merge-sort").on("click", () => {
 
   // End run-time stopwatch
   let end = window.performance.now();
-  d3.select("body").append("div")
-    .text(`Merge Sort Execution time: ${end - start} ms. Theta ϴ(n log n)`);
+
+  // Append new card with runtime
+  mergeSorted = "Merge Sort"
+  bigO = "Theta ϴ(n log n)"
+  addCard(mergeSorted, end, start, bigO);
+
+  // Add data table
+  addTable(array)
 });
 
 // --------------------------------------
@@ -470,8 +524,12 @@ d3.select("#insertion-sort").on("click", () => {
 
   // End run-time stopwatch
   let end = window.performance.now();
-  d3.select("body").append("div")
-    .text(`Insertion Sort Execution time: ${end - start} ms. Big-O O(n squared), Omega Ω(n)`);
 
-  console.log(array);
+  // Append new card with runtime
+  insertionSort = "Insertion Sort"
+  bigO = "Big-O O(n squared), Omega Ω(n)"
+  addCard(insertionSort, end, start, bigO);
+
+  // Add data table
+  addTable(array)
 });

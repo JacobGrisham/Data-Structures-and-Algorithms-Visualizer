@@ -32,6 +32,7 @@ h2, a, p {
 
 .navbar-nav {
   flex-direction: row;
+  
 }
 
 /* -------------------------------------- */
@@ -51,7 +52,16 @@ svg {
   position: absolute;
   pointer-events: none;
   color: white;
-  background-color: grey;
-  border: 2px solid black;
+  background-color: #343B3F;
   padding: 2rem;
+}
+
+.card {
+  background-color: rgb(48, 48, 48);
+  color: white;
+}
+
+.list-group-item {
+  background-color: rgb(38, 38, 38);
+  color: white;
 }
