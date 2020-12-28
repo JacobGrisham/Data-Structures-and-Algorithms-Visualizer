@@ -11,10 +11,8 @@ const svg = d3.select("svg")
 var array = [];
 const n = 100;
 var barWidth = width / n - barPadding;
-var xScale = d3.scaleLinear()
-                .domain([0, n])
-                .range([0, width]);
 const animationDuration = 1000;
+var animationStop = false;
 
 // --------------------------------------
 // Global Functions
@@ -38,21 +36,13 @@ function colorReset(){
   }
 }
 
-// Animate bars sliding from original position to final position
-// function slide(i) {
-//     d3.select("#bar_" + i)
-//       .transition()
-//       .duration(100)
-//       .attr("transform", (i) => {return "translate(" + xScale(i + 1) + ", 0)"});
-// }
-
 function addCard(algorithm, end, start, bigO){
   d3.select("#runtimes")
   .append("div")
   .html(
     `<div class="card mx-2" style="width: 18rem;">
       <div class="card-body">
-        <div class="card-header"> ${algorithm} Execution Time</div>
+        <div class="card-header"> ${algorithm} Javascript Execution Time</div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item"> ${end - start} ms </li>
             <li class="list-group-item"> ${bigO} </li>
@@ -61,17 +51,10 @@ function addCard(algorithm, end, start, bigO){
     </div>`
 )}
 
-function addTable(array){
-// Erase any old data from table
-d3.selectAll("td")
-  .remove();
-
-// Iteratively add data cells
-for (i = 0; i < len; i++) {
-  d3.select("#data")
-    .append("td")
-    .text(array[i]);
-  }
+// Stop previous animation from running because setInterval won't stop otherwise
+function stopPreviousAnimation() {
+  animationStop = true;
+  console.log("any previous animation should stop, animationStop = ", animationStop)
 }
 
 // Initialize first graph
@@ -118,7 +101,7 @@ g.append("rect")
   .attr("y", (d) => {return yScale(d)})
   .attr("height", (d) => {return height - yScale(d)})
   .attr("width", (d) => barWidth)
-  .on("mousemove", (d, i) => {  tooltip.transition().duration(100).style("opacity", .9);      
+  .on("mousemove", (d, i) => {tooltip.transition().duration(100).style("opacity", .9);      
   tooltip.html(d).style("left", (d3.event.pageX) + "px").style("top", (d3.event.pageY) + "px")})
   .on("mouseleave", d => {tooltip.transition() .duration(300) .style("opacity", 0)});
 
@@ -142,6 +125,32 @@ g.merge(bars)
 // When you press unsort or new data
 // .transition()
 // .delay(function(d, i) { return i * 5; })
+
+
+// --------------------------------------
+// Data Table
+// --------------------------------------
+
+function addTable(array){
+
+  table = d3.select("#data")
+            .selectAll("td")
+            .data(array)
+
+  var g = table
+            .enter()
+            .append("td")
+
+  g.text((d) => {return d})
+
+  // Erase any old data from table
+  table
+      .exit()
+      .remove();
+
+  g.merge(table)
+      .text((d) => {return d})
+}
 
 
 // --------------------------------------
@@ -340,6 +349,9 @@ d3.select("#bubble-sort").on("click", () => {
   // Reset color of bars
   colorReset()
 
+  // Allow recursive animation
+  animationStop = false;
+
   // Begin run-time stopwatch
   let start = window.performance.now();
 
@@ -347,7 +359,9 @@ d3.select("#bubble-sort").on("click", () => {
   do {
     swapped = false;
     for (let i = 0; i < len; i++) {
-      setInterval(() => {
+      // Recursive setTimeout animation
+      animation = setTimeout(function bubbleSorting() {
+
         if (array[i] > array[i + 1]) {
           // Assign the values to variables
           // First is bigger
@@ -362,6 +376,11 @@ d3.select("#bubble-sort").on("click", () => {
           swapped = true;
 
           drawGraph(array);
+          addTable(array);
+        }
+
+        if (animationStop === false){
+          setTimeout(bubbleSorting, animationDuration);
         }
       }, animationDuration)
     }
@@ -375,8 +394,6 @@ d3.select("#bubble-sort").on("click", () => {
   bigO = "Big-O O(n squared), Omega Ω(n)"
   addCard(bubbleSort, end, start, bigO);
 
-  // Add data table
-  addTable(array)
 });
 
 // --------------------------------------
@@ -410,6 +427,7 @@ d3.select("#selection-sort").on("click", () => {
           array[i] = array[min];
           array[min] = tmp;
           drawGraph(array);
+          addTable(array);
         }
     }, animationDuration)
     }
@@ -421,9 +439,6 @@ d3.select("#selection-sort").on("click", () => {
   selectionSort = "Selection Sort"
   bigO = "Theta ϴ(n squared)"
   addCard(selectionSort, end, start, bigO);
-
-  // Add data table
-  addTable(array)
 });
 
 
@@ -465,10 +480,12 @@ d3.select("#merge-sort").on("click", () => {
         resultArray.push(left[leftIndex]);
         leftIndex++; // move left array cursor
         drawGraph(resultArray)
+        addTable(array);
       } else {
         resultArray.push(right[rightIndex]);
         rightIndex++; // move right array cursor
         drawGraph(resultArray)
+        addTable(array);
       }
   }
     // We need to concat here because there will be one element remaining
@@ -487,9 +504,6 @@ d3.select("#merge-sort").on("click", () => {
   mergeSorted = "Merge Sort"
   bigO = "Theta ϴ(n log n)"
   addCard(mergeSorted, end, start, bigO);
-
-  // Add data table
-  addTable(array)
 });
 
 // --------------------------------------
@@ -508,7 +522,7 @@ d3.select("#insertion-sort").on("click", () => {
 
   // Run Insertion Sort Algorithm
   for (let i = 1; i < len; i++) {
-    setInterval(() => {
+    setTimeout(() => {
       let key = array[i];
       let j = i - 1;
       // if previous value is greater than current value, swap
@@ -517,6 +531,7 @@ d3.select("#insertion-sort").on("click", () => {
           array[j + 1] = array[j];
           j = j - 1;
           drawGraph(array);
+          addTable(array);
       }
       array[j + 1] = key;
     }, animationDuration)
@@ -529,7 +544,4 @@ d3.select("#insertion-sort").on("click", () => {
   insertionSort = "Insertion Sort"
   bigO = "Big-O O(n squared), Omega Ω(n)"
   addCard(insertionSort, end, start, bigO);
-
-  // Add data table
-  addTable(array)
 });
