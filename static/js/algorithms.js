@@ -17,6 +17,7 @@ var animationStop = false;
 // --------------------------------------
 // Global Functions
 // --------------------------------------
+// Random number generator
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
@@ -36,6 +37,7 @@ function colorReset(){
   }
 }
 
+// Create card to display runtime and Big-O information
 function addCard(algorithm, end, start, bigO){
   d3.select("#runtimes")
   .append("div")
@@ -122,10 +124,66 @@ g.merge(bars)
   .attr("id", function(d, i) {return 'bar_' + i})
 }
 
-// When you press unsort or new data
-// .transition()
-// .delay(function(d, i) { return i * 5; })
 
+// --------------------------------------
+// Draw Graph (more visually appealing)
+// --------------------------------------
+
+function sexyDrawGraph(array){
+// Create y-axis scale to ensure bars fit inside svg area and for calculating y and height attribute in rect
+var yScale = d3.scaleLinear()
+               .domain([0, Math.max(...array)])
+               .range([height, 0]);
+
+var xScale = d3.scaleLinear()
+                .domain([0, n])
+                .range([0, width]);
+
+var bars = d3.select("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .selectAll(".bar")
+                .data(array)
+
+var g = bars
+                .enter()
+                .append("g")
+                  .classed("bar", true)
+
+// Create a tooltip
+var tooltip = d3.select("#tooltip")
+                .append("div")
+                .style("opacity", 0)
+                .attr("class", "tooltip")
+
+// Draw rectangles
+g.append("rect")
+  .attr("transform", function(d, i) {return "translate(" + (xScale(i) - (barWidth + barPadding)) + ",0)"})
+  .attr("y", (d) => {return yScale(d)})
+  .attr("height", (d) => {return height - yScale(d)})
+  .attr("width", (d) => barWidth)
+  .on("mousemove", (d, i) => {tooltip.transition().duration(100).style("opacity", .9);      
+  tooltip.html(d).style("left", (d3.event.pageX) + "px").style("top", (d3.event.pageY) + "px")})
+  .on("mouseleave", d => {tooltip.transition() .duration(300) .style("opacity", 0)});
+
+  // .attr("x", (d, i) => {return (barWidth + barPadding) * i})
+
+// Remove old data
+bars
+.exit()
+.remove();
+
+// Update data
+g.merge(bars)
+  .select("rect")
+  .transition()
+  .delay(function(d, i) { return i * 5; })
+  .attr("transform", function(d, i) {return "translate(" + (xScale(i) - (barWidth + barPadding)) + ",0)"})
+  .attr("y", (d) => {return yScale(d)})
+  .attr("height", (d) => {return height - yScale(d)})
+  .attr("width", (d) => barWidth)
+  .attr("id", function(d, i) {return 'bar_' + i})
+}
 
 // --------------------------------------
 // Data Table
@@ -177,7 +235,7 @@ d3.select("#unsort").on("click", () => {
   }
 
   colorReset();
-  drawGraph(array);
+  sexyDrawGraph(array);
   addTable(array);
 
   console.log("The array values shouldn't change, only their positions: ", array);
@@ -199,7 +257,7 @@ d3.select("#new-data").on("click", () => {
   }
 
   colorReset();
-  drawGraph(array);
+  sexyDrawGraph(array);
   addTable(array);
 
   console.log(array);
@@ -534,7 +592,7 @@ d3.select("#insertion-sort").on("click", () => {
           addTable(array);
       }
       array[j + 1] = key;
-    }, animationDuration)
+    }, animationDuration * 10)
   }
 
   // End run-time stopwatch
