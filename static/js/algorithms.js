@@ -166,8 +166,6 @@ g.append("rect")
   tooltip.html(d).style("left", (d3.event.pageX) + "px").style("top", (d3.event.pageY) + "px")})
   .on("mouseleave", d => {tooltip.transition() .duration(300) .style("opacity", 0)});
 
-  // .attr("x", (d, i) => {return (barWidth + barPadding) * i})
-
 // Remove old data
 bars
 .exit()
@@ -515,24 +513,24 @@ d3.select("#merge-sort").on("click", () => {
   let start = window.performance.now();
 
   function mergeSort (array) {
-    // No need to sort the array if the array only has one element or empty
+    // Error handling
     if (array.length <= 1) {
       return array;
     }
-    // In order to divide the array in half, we need to figure out the middle
+    // Find middle
     const middle = Math.floor(array.length / 2);
-    // This is where we will be dividing the array into left and right
+    // Divide array into right and left halves
     const left = array.slice(0, middle);
     const right = array.slice(middle);
 
-    // Using recursion to combine the left and right
+    // Use recursion to combine the left and right
     return merge(mergeSort(left), mergeSort(right));
   }
 
   // Merge the two arrays: left and right
   function merge (left, right) {
     let resultArray = [], leftIndex = 0, rightIndex = 0;
-    // We will concatenate values into the resultArray in order
+    // Concatenate values into the resultArray in order
     while (leftIndex < left.length && rightIndex < right.length) {
       if (left[leftIndex] < right[rightIndex]) {
         resultArray.push(left[leftIndex]);
@@ -546,8 +544,7 @@ d3.select("#merge-sort").on("click", () => {
         addTable(array);
       }
   }
-    // We need to concat here because there will be one element remaining
-    // from either left OR the right
+    // Concat because there will be one element remaining from either left OR the right
     return resultArray
     .concat(left.slice(leftIndex))
     .concat(right.slice(rightIndex));
