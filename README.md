@@ -1,13 +1,37 @@
-# Data Structures and Algorithms Visualizer: Full-Stack Web App using Flask
+# Algorithms Visualizer: Front-End Web App using Flask
 [![<JacobGrisham>](https://circleci.com/gh/JacobGrisham/Data-Structures-and-Algorithms-Visualizer.svg?style=svg)](https://app.circleci.com/pipelines/github/JacobGrisham/Data-Structures-and-Algorithms-Visualizer)
 ### Final Project from [Harvard's Introduction to Computer Science CS50 hosted on eDX](https://www.edx.org/course/cs50s-introduction-to-computer-science)
 ### 🎓 [Final Project](https://cs50.harvard.edu/x/2020/project/)
-- The climax of this course is its final project. I chose to create a web-based application using JavaScript, Python, and SQL.
+- The climax of this course is its final project. I chose to create a web-based searching and sorting algorithms visualization tool.
 
 ## 💡Lessons Learned
+- Searching and Sorting Algorithms
 - D3 Data Visualization
-- CircleCI integration with Jira
+- Asynchronous Javascript
+## 🛠 Technologies
+|Front-End|Back-End|
+| ------- | ------ |
+|HTML5	  |Flask   |
+|CSS3		  |Python  |
+|Bootstrap 4|.     |
+|Javascript|.		   |
+|D3       |.       |
 
+## ⚖️ Methodology
+- D3 Library for data visualization to both challenge myself with learning a new framework and because D3 is the ideal solution for data visualization problems
+- Bootstrap 4 for increasing my experience working with it and to shift focus towards spending more time on the data visualization and underlying algorithms
+## ⚙️ Features
+- Visualize Linear Search, Binary Search, Bubble Sort, Selection Sort, Merge Sort, and Insertion Sort
+- Random numbers in an array are graphed as a bar chart
+- The values of the array are also shown and updated in an HTML table below the bar chart
+- They are also accessible through a tooltip. Hover over the bar in question
+- The Javascript Execution times are logged in Bootstrap 4 cards to allow comparison of different algorithm runtimes and for further information on the Big-O
+
+To Do:
+- Add unit testing
+- Allow user to specify the speed they want the algorithm to run
+- Add more algorithms as I progress in my studies
+- Expand upon the scope by incorporating data structure visualization and manipulation
 ## 🚀 Getting Started
 To run this project locally:
 - In your terminal, navigate to the root project directory and run the following commands
@@ -29,6 +53,5 @@ $ python app.py
 $ export FLASK_APP=application.py
 $ flask run
 ```
-
 ## 🔒 License
 Copyright Notice and Statement: currently not offering any license. Permission only to view and download.
