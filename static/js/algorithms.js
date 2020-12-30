@@ -589,7 +589,7 @@ d3.select("#insertion-sort").on("click", () => {
           addTable(array);
       }
       array[j + 1] = key;
-    }, animationDuration * 10)
+    }, animationDuration / 10)
   }
 
   // End run-time stopwatch
