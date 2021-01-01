@@ -94,7 +94,7 @@ var tooltip = d3.select("#tooltip")
 g.append("rect")
   .attr("transform", function(d, i) {return "translate(" + (xScale(i) - (barWidth + barPadding)) + ",0)";})
   .attr("y", (d) => {return yScale(d);})
-  .attr("height", (d) => {return height - yScale(d)})
+  .attr("height", (d) => {return height - yScale(d);})
   .attr("width", (d) => barWidth)
   .on("mousemove", (d, i) => {tooltip.transition().duration(100).style("opacity", 0.9);      
   tooltip.html(d).style("left", (d3.event.pageX) + "px").style("top", (d3.event.pageY) + "px");})
@@ -110,9 +110,9 @@ bars
 // Update data
 g.merge(bars)
   .select("rect")
-  .attr("transform", function(d, i) {return "translate(" + (xScale(i) - (barWidth + barPadding)) + ",0)"})
-  .attr("y", (d) => {return yScale(d)})
-  .attr("height", (d) => {return height - yScale(d)})
+  .attr("transform", function(d, i) {return "translate(" + (xScale(i) - (barWidth + barPadding)) + ",0)";})
+  .attr("y", (d) => {return yScale(d);})
+  .attr("height", (d) => {return height - yScale(d);})
   .attr("width", (d) => barWidth)
   .attr("id", function(d, i) {return "bar_" + i;});
 
@@ -135,7 +135,7 @@ function addTable(array){
             .enter()
             .append("td");
 
-  g.text((d) => {return d;})
+  g.text((d) => {return d;});
 
   // Erase any old data from table
   table
@@ -271,6 +271,12 @@ d3.select("#binary-search-form").on("submit", () => {
   // Begin run-time stopwatch
   let start = window.performance.now();
 
+  function colorGrey(position){
+    d3.selectAll(".bar")
+    .select("#bar_" + position)
+    .style("fill", "grey");
+  }
+
   let arrayStart = 0, arrayEnd = len - 1, i = 0;     
   // Iterate while arrayStart is greater than arrayEnd 
   while (i < n){
@@ -295,9 +301,7 @@ d3.select("#binary-search-form").on("submit", () => {
     else if (array[mid] < parseInt(input, 10)){
       // Look right of sorted array
       arrayStart = mid + 1;
-      d3.selectAll(".bar")
-          .select("#bar_" + arrayStart)
-          .style("fill", "grey");
+      colorGrey(arrayStart);
 
       // Increment i to prevent while loop
       i++;
@@ -307,9 +311,7 @@ d3.select("#binary-search-form").on("submit", () => {
     else {
       // Look left of sorted array
       arrayEnd = mid - 1;
-      d3.selectAll(".bar")
-          .select("#bar_" + arrayEnd)
-          .style("fill", "grey");
+      colorGrey(arrayEnd);
         
       // Increment i to prevent while loop
       i++;
@@ -420,7 +422,7 @@ d3.select("#selection-sort").on("click", () => {
           drawGraph(array);
           addTable(array);
         }
-    }, animationDuration)
+    }, animationDuration);
     }
 
   // End run-time stopwatch
@@ -470,12 +472,12 @@ d3.select("#merge-sort").on("click", () => {
       if (left[leftIndex] < right[rightIndex]) {
         resultArray.push(left[leftIndex]);
         leftIndex++; // move left array cursor
-        drawGraph(resultArray)
+        drawGraph(resultArray);
         addTable(array);
       } else {
         resultArray.push(right[rightIndex]);
         rightIndex++; // move right array cursor
-        drawGraph(resultArray)
+        drawGraph(resultArray);
         addTable(array);
       }
   }
@@ -524,7 +526,7 @@ d3.select("#insertion-sort").on("click", () => {
           addTable(array);
       }
       array[j + 1] = key;
-    }, animationDuration / 10)
+    }, animationDuration / 10);
   }
 
   // End run-time stopwatch
