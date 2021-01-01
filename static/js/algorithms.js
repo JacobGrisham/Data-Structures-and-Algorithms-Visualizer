@@ -92,13 +92,13 @@ var tooltip = d3.select("#tooltip")
 
 // Draw rectangles
 g.append("rect")
-  .attr("transform", function(d, i) {return "translate(" + (xScale(i) - (barWidth + barPadding)) + ",0)"})
-  .attr("y", (d) => {return yScale(d)})
+  .attr("transform", function(d, i) {return "translate(" + (xScale(i) - (barWidth + barPadding)) + ",0)";})
+  .attr("y", (d) => {return yScale(d);})
   .attr("height", (d) => {return height - yScale(d)})
   .attr("width", (d) => barWidth)
   .on("mousemove", (d, i) => {tooltip.transition().duration(100).style("opacity", 0.9);      
-  tooltip.html(d).style("left", (d3.event.pageX) + "px").style("top", (d3.event.pageY) + "px")})
-  .on("mouseleave", (d) => {tooltip.transition() .duration(300) .style("opacity", 0)});
+  tooltip.html(d).style("left", (d3.event.pageX) + "px").style("top", (d3.event.pageY) + "px");})
+  .on("mouseleave", (d) => {tooltip.transition() .duration(300) .style("opacity", 0);});
 
   // .attr("x", (d, i) => {return (barWidth + barPadding) * i})
 
@@ -114,7 +114,7 @@ g.merge(bars)
   .attr("y", (d) => {return yScale(d)})
   .attr("height", (d) => {return height - yScale(d)})
   .attr("width", (d) => barWidth)
-  .attr("id", function(d, i) {return "bar_" + i});
+  .attr("id", function(d, i) {return "bar_" + i;});
 
   // Add this to g.merge(bars) when clicking on Unsort or New Data
   // .transition()
@@ -135,7 +135,7 @@ function addTable(array){
             .enter()
             .append("td");
 
-  g.text((d) => {return d})
+  g.text((d) => {return d;})
 
   // Erase any old data from table
   table
@@ -143,7 +143,7 @@ function addTable(array){
       .remove();
 
   g.merge(table)
-      .text((d) => {return d});
+      .text((d) => {return d;});
 }
 
 // --------------------------------------
@@ -222,7 +222,7 @@ d3.select("#linear-search-form").on("submit", () => {
     
     if (array[i] === parseInt(input, 10)) {
       // Convert index number
-      function getIndex(num) {return num == parseInt(array[i], 10)}
+      function getIndex(num) {return num === parseInt(array[i], 10);}
 
       // Color bar red if matched
       d3.selectAll(".bar")
@@ -231,7 +231,7 @@ d3.select("#linear-search-form").on("submit", () => {
           .delay(function(d, i) { return i * 10; })
           .style("fill", "red");
       // Stop for loop
-      break
+      break;
     }
     else {
       d3.selectAll(".bar")
@@ -247,8 +247,8 @@ d3.select("#linear-search-form").on("submit", () => {
   let end = window.performance.now();
 
   // Append new card with runtime
-  linearSearch = "Linear Search"
-  bigO = "Big-O O(n), Omega Ω(1)"
+  let linearSearch = "Linear Search";
+  let bigO = "Big-O O(n), Omega Ω(1)";
   addCard(linearSearch, end, start, bigO);
 
 });
@@ -322,8 +322,8 @@ d3.select("#binary-search-form").on("submit", () => {
   let end = window.performance.now();
 
   // Append new card with runtime
-  binarySearch = "Binary Search"
-  bigO = "Big-O O(log n), Omega Ω(1)"
+  let binarySearch = "Binary Search";
+  let bigO = "Big-O O(log n), Omega Ω(1)";
   addCard(binarySearch, end, start, bigO);
   
   drawGraph(array)
@@ -373,7 +373,7 @@ d3.select("#bubble-sort").on("click", () => {
         if (animationStop === false){
           setTimeout(bubbleSorting, animationDuration);
         }
-      }, animationDuration)
+      }, animationDuration);
     }
   } while (swapped);
 
@@ -381,8 +381,8 @@ d3.select("#bubble-sort").on("click", () => {
   let end = window.performance.now();
 
   // Append new card with runtime
-  bubbleSort = "Bubble Sort"
-  bigO = "Big-O O(n squared), Omega Ω(n)"
+  let bubbleSort = "Bubble Sort";
+  let bigO = "Big-O O(n squared), Omega Ω(n)";
   addCard(bubbleSort, end, start, bigO);
 
 });
@@ -427,8 +427,8 @@ d3.select("#selection-sort").on("click", () => {
   let end = window.performance.now();
 
   // Append new card with runtime
-  selectionSort = "Selection Sort"
-  bigO = "Theta ϴ(n squared)"
+  let selectionSort = "Selection Sort";
+  let bigO = "Theta ϴ(n squared)";
   addCard(selectionSort, end, start, bigO);
 });
 
@@ -491,8 +491,8 @@ d3.select("#merge-sort").on("click", () => {
   let end = window.performance.now();
 
   // Append new card with runtime
-  mergeSorted = "Merge Sort"
-  bigO = "Theta ϴ(n log n)"
+  let mergeSorted = "Merge Sort";
+  let bigO = "Theta ϴ(n log n)";
   addCard(mergeSorted, end, start, bigO);
 });
 
@@ -531,7 +531,7 @@ d3.select("#insertion-sort").on("click", () => {
   let end = window.performance.now();
 
   // Append new card with runtime
-  insertionSort = "Insertion Sort"
-  bigO = "Big-O O(n squared), Omega Ω(n)"
+  let insertionSort = "Insertion Sort";
+  let bigO = "Big-O O(n squared), Omega Ω(n)";
   addCard(insertionSort, end, start, bigO);
 });
