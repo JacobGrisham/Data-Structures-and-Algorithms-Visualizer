@@ -222,7 +222,7 @@ d3.select("#linear-search-form").on("submit", () => {
     
     if (array[i] === parseInt(input, 10)) {
       // Convert index number
-      function getIndex(num) {return num === parseInt(array[i], 10);}
+      function getIndex(num) {return num === parseInt(array[i], 10);};
 
       // Color bar red if matched
       d3.selectAll(".bar")
@@ -286,7 +286,7 @@ d3.select("#binary-search-form").on("submit", () => {
     // If element is present at mid, return True 
     if (array[mid] === parseInt(input, 10)){
         // Convert insput string to number
-        function getInput(num) {return num === parseInt(input, 10)}
+        function getInput(num) {return num === parseInt(input, 10)};
 
       // Color bar red if matched
       d3.selectAll(".bar")
@@ -328,7 +328,7 @@ d3.select("#binary-search-form").on("submit", () => {
   let bigO = "Big-O O(log n), Omega Ω(1)";
   addCard(binarySearch, end, start, bigO);
   
-  drawGraph(array)
+  drawGraph(array);
   });
 
 // --------------------------------------
@@ -353,7 +353,7 @@ d3.select("#bubble-sort").on("click", () => {
     swapped = false;
     for (let i = 0; i < len; i++) {
       // Recursive setTimeout animation
-      animation = setTimeout(function bubbleSorting() {
+      setTimeout(function bubbleSorting() {
 
         if (array[i] > array[i + 1]) {
           // Assign the values to variables
