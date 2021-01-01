@@ -1,6 +1,7 @@
 // --------------------------------------
 // Global Variables
 // --------------------------------------
+/* global d3 */
 const width = 600;
 const height = 600;
 const padding = 50;
@@ -27,7 +28,6 @@ for (var i = 0; i < n; i++){
   array.push(getRandomInt(1000));
 }
 var len = array.length;
-console.log(array);
 
 // Reset color of bars
 function colorReset(){
@@ -51,19 +51,12 @@ function addCard(algorithm, end, start, bigO){
           </ul>
       </div>
     </div>`
-)}
+);}
 
 // Stop previous animation from running because setInterval won't stop otherwise
 function stopPreviousAnimation() {
   animationStop = true;
-  console.log("any previous animation should stop, animationStop = ", animationStop)
 }
-
-// Initialize first graph
-d3.select(window).on("load", drawGraph(array));
-
-// Initialize first data table
-d3.select(window).on("load", addTable(array));
 
 // --------------------------------------
 // Draw Graph
@@ -84,18 +77,18 @@ var bars = d3.select("svg")
                 .attr("width", width)
                 .attr("height", height)
                 .selectAll(".bar")
-                .data(array)
+                .data(array);
 
 var g = bars
                 .enter()
                 .append("g")
-                  .classed("bar", true)
+                  .classed("bar", true);
 
 // Create a tooltip
 var tooltip = d3.select("#tooltip")
                 .append("div")
                 .style("opacity", 0)
-                .attr("class", "tooltip")
+                .attr("class", "tooltip");
 
 // Draw rectangles
 g.append("rect")
@@ -103,9 +96,9 @@ g.append("rect")
   .attr("y", (d) => {return yScale(d)})
   .attr("height", (d) => {return height - yScale(d)})
   .attr("width", (d) => barWidth)
-  .on("mousemove", (d, i) => {tooltip.transition().duration(100).style("opacity", .9);      
+  .on("mousemove", (d, i) => {tooltip.transition().duration(100).style("opacity", 0.9);      
   tooltip.html(d).style("left", (d3.event.pageX) + "px").style("top", (d3.event.pageY) + "px")})
-  .on("mouseleave", d => {tooltip.transition() .duration(300) .style("opacity", 0)});
+  .on("mouseleave", (d) => {tooltip.transition() .duration(300) .style("opacity", 0)});
 
   // .attr("x", (d, i) => {return (barWidth + barPadding) * i})
 
@@ -121,66 +114,11 @@ g.merge(bars)
   .attr("y", (d) => {return yScale(d)})
   .attr("height", (d) => {return height - yScale(d)})
   .attr("width", (d) => barWidth)
-  .attr("id", function(d, i) {return 'bar_' + i})
-}
+  .attr("id", function(d, i) {return "bar_" + i});
 
-
-// --------------------------------------
-// Draw Graph (more visually appealing)
-// --------------------------------------
-
-function sexyDrawGraph(array){
-// Create y-axis scale to ensure bars fit inside svg area and for calculating y and height attribute in rect
-var yScale = d3.scaleLinear()
-               .domain([0, Math.max(...array)])
-               .range([height, 0]);
-
-var xScale = d3.scaleLinear()
-                .domain([0, n])
-                .range([0, width]);
-
-var bars = d3.select("svg")
-                .attr("width", width)
-                .attr("height", height)
-                .selectAll(".bar")
-                .data(array)
-
-var g = bars
-                .enter()
-                .append("g")
-                  .classed("bar", true)
-
-// Create a tooltip
-var tooltip = d3.select("#tooltip")
-                .append("div")
-                .style("opacity", 0)
-                .attr("class", "tooltip")
-
-// Draw rectangles
-g.append("rect")
-  .attr("transform", function(d, i) {return "translate(" + (xScale(i) - (barWidth + barPadding)) + ",0)"})
-  .attr("y", (d) => {return yScale(d)})
-  .attr("height", (d) => {return height - yScale(d)})
-  .attr("width", (d) => barWidth)
-  .on("mousemove", (d, i) => {tooltip.transition().duration(100).style("opacity", .9);      
-  tooltip.html(d).style("left", (d3.event.pageX) + "px").style("top", (d3.event.pageY) + "px")})
-  .on("mouseleave", d => {tooltip.transition() .duration(300) .style("opacity", 0)});
-
-// Remove old data
-bars
-.exit()
-.remove();
-
-// Update data
-g.merge(bars)
-  .select("rect")
-  .transition()
-  .delay(function(d, i) { return i * 5; })
-  .attr("transform", function(d, i) {return "translate(" + (xScale(i) - (barWidth + barPadding)) + ",0)"})
-  .attr("y", (d) => {return yScale(d)})
-  .attr("height", (d) => {return height - yScale(d)})
-  .attr("width", (d) => barWidth)
-  .attr("id", function(d, i) {return 'bar_' + i})
+  // Add this to g.merge(bars) when clicking on Unsort or New Data
+  // .transition()
+  // .delay(function(d, i) { return i * 5; })
 }
 
 // --------------------------------------
@@ -189,13 +127,13 @@ g.merge(bars)
 
 function addTable(array){
 
-  table = d3.select("#data")
+  var table = d3.select("#data")
             .selectAll("td")
-            .data(array)
+            .data(array);
 
   var g = table
             .enter()
-            .append("td")
+            .append("td");
 
   g.text((d) => {return d})
 
@@ -205,9 +143,15 @@ function addTable(array){
       .remove();
 
   g.merge(table)
-      .text((d) => {return d})
+      .text((d) => {return d});
 }
 
+// --------------------------------------
+// Intialize First Graph and Table
+// --------------------------------------
+
+d3.select(window).on("load", drawGraph(array));
+d3.select(window).on("load", addTable(array));
 
 // --------------------------------------
 // Unsort
@@ -233,11 +177,8 @@ d3.select("#unsort").on("click", () => {
   }
 
   colorReset();
-  sexyDrawGraph(array);
+  drawGraph(array);
   addTable(array);
-
-  console.log("The array values shouldn't change, only their positions: ", array);
-
 });
 
 // --------------------------------------
@@ -255,10 +196,8 @@ d3.select("#new-data").on("click", () => {
   }
 
   colorReset();
-  sexyDrawGraph(array);
+  drawGraph(array);
   addTable(array);
-
-  console.log(array);
 });
 
 // --------------------------------------
@@ -270,20 +209,20 @@ d3.select("#linear-search-form").on("submit", () => {
   d3.event.preventDefault();
 
   // Reset color of bars
-  colorReset()
+  colorReset();
 
   // Obtain input from user
-  let input = document.getElementById("linear-search-input").value
+  let input = document.getElementById("linear-search-input").value;
 
   // Begin run-time stopwatch
   let start = window.performance.now();
 
   // Iterate over data
   for (let i = 0; i < n; i++){
-    // Convert index number
-    function getIndex(num) {return num == parseInt(array[i])}
     
-    if (array[i] === parseInt(input)) {
+    if (array[i] === parseInt(input, 10)) {
+      // Convert index number
+      function getIndex(num) {return num == parseInt(array[i], 10)}
 
       // Color bar red if matched
       d3.selectAll(".bar")
@@ -291,9 +230,6 @@ d3.select("#linear-search-form").on("submit", () => {
           .transition()
           .delay(function(d, i) { return i * 10; })
           .style("fill", "red");
-
-      console.log("found ", input);
-
       // Stop for loop
       break
     }
@@ -327,10 +263,10 @@ d3.select("#binary-search-form").on("submit", () => {
   d3.event.preventDefault();
 
   // Reset color of bars
-  colorReset()
+  colorReset();
 
   // Obtain input from user
-  let input = document.getElementById("binary-search-input").value
+  let input = document.getElementById("binary-search-input").value;
 
   // Begin run-time stopwatch
   let start = window.performance.now();
@@ -342,9 +278,9 @@ d3.select("#binary-search-form").on("submit", () => {
     let mid = Math.floor((arrayStart + arrayEnd)/2); 
 
     // If element is present at mid, return True 
-    if (array[mid] === parseInt(input)){
+    if (array[mid] === parseInt(input, 10)){
         // Convert insput string to number
-        function getInput(num) {return num == parseInt(input)}
+        function getInput(num) {return num === parseInt(input, 10)}
 
       // Color bar red if matched
       d3.selectAll(".bar")
@@ -353,11 +289,10 @@ d3.select("#binary-search-form").on("submit", () => {
       
       // Stop while loop
       i = n;
-      console.log("found ", input)
     }
 
     // Else look in left or right half accordingly 
-    else if (array[mid] < parseInt(input)){
+    else if (array[mid] < parseInt(input, 10)){
       // Look right of sorted array
       arrayStart = mid + 1;
       d3.selectAll(".bar")
@@ -403,7 +338,7 @@ d3.select("#bubble-sort").on("click", () => {
   d3.event.preventDefault();
 
   // Reset color of bars
-  colorReset()
+  colorReset();
 
   // Allow recursive animation
   animationStop = false;
@@ -461,7 +396,7 @@ d3.select("#selection-sort").on("click", () => {
   d3.event.preventDefault();
 
   // Reset color of bars
-  colorReset()
+  colorReset();
 
   // Begin run-time stopwatch
   let start = window.performance.now();
@@ -507,7 +442,7 @@ d3.select("#merge-sort").on("click", () => {
   d3.event.preventDefault();
 
   // Reset color of bars
-  colorReset()
+  colorReset();
 
   // Begin run-time stopwatch
   let start = window.performance.now();
@@ -570,7 +505,7 @@ d3.select("#insertion-sort").on("click", () => {
   d3.event.preventDefault();
 
   // Reset color of bars
-  colorReset()
+  colorReset();
 
   // Begin run-time stopwatch
   let start = window.performance.now();

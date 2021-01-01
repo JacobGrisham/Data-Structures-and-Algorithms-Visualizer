@@ -1,5 +1,7 @@
 /* -------------------------------------- */
+
 /* BASE */
+
 /* -------------------------------------- */
 body {
   background-color: rgb(32, 32, 32);
@@ -7,8 +9,10 @@ body {
   font-family: 'Lato', sans-serif;
 }
 
-h2, a, p {
-  color: rgb(200,200,200)
+h2,
+a,
+p {
+  color: rgb(200, 200, 200);
 }
 
 .img-fluid {
@@ -17,7 +21,9 @@ h2, a, p {
 }
 
 /* -------------------------------------- */
+
 /* INDEX */
+
 /* -------------------------------------- */
 
 #index-nav {
@@ -27,16 +33,19 @@ h2, a, p {
 }
 
 /* -------------------------------------- */
+
 /* Aglorithms NAV and DATA-STRUCTURES NAV */
+
 /* -------------------------------------- */
 
 .navbar-nav {
   flex-direction: row;
-  
 }
 
 /* -------------------------------------- */
+
 /* Aglorithms and DATA-STRUCTURES */
+
 /* -------------------------------------- */
 svg {
   margin: 0 auto;
@@ -52,7 +61,7 @@ svg {
   position: absolute;
   pointer-events: none;
   color: white;
-  background-color: #343B3F;
+  background-color: #343b3f;
   padding: 2rem;
 }
 

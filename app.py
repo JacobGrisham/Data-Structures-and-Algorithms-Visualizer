@@ -26,5 +26,6 @@ def pageNotFound(error):
 
 # Run Server
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(debug = False)
 # Run the following in the command line: python application.py
+# Set debug = True during development. Running Flask applications in debug mode results in the Werkzeug debugger being enabled. This includes a feature that allows arbitrary code execution. Documentation for both Flask and Werkzeug strongly suggests that debug mode should never be enabled on production systems.
