@@ -58,6 +58,9 @@ function stopPreviousAnimation() {
   animationStop = true;
 }
 
+// Convert input string to number
+function getIndex(num, input) {return num === parseInt(input, 10);}
+
 // --------------------------------------
 // Draw Graph
 // --------------------------------------
@@ -222,7 +225,7 @@ d3.select("#linear-search-form").on("submit", () => {
     
     if (array[i] === parseInt(input, 10)) {
       // Convert index number
-      function getIndex(num) {return num === parseInt(array[i], 10);};
+      getIndex(num, array[i]);
 
       // Color bar red if matched
       d3.selectAll(".bar")
@@ -285,12 +288,13 @@ d3.select("#binary-search-form").on("submit", () => {
 
     // If element is present at mid, return True 
     if (array[mid] === parseInt(input, 10)){
-        // Convert insput string to number
-        function getInput(num) {return num === parseInt(input, 10)};
+        // // Convert input string to number
+        // function getInput(num) {return num === parseInt(input, 10);}
+        getIndex(num, input);
 
       // Color bar red if matched
       d3.selectAll(".bar")
-          .select("#bar_" + array.findIndex(getInput))
+          .select("#bar_" + array.findIndex(getIndex))
           .style("fill", "red");
       
       // Stop while loop
