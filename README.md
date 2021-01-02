@@ -29,8 +29,8 @@
 ## ⚙️ Features
 -   Visualize Linear Search, Binary Search, Bubble Sort, Selection Sort, Merge Sort, and Insertion Sort
 -   Random numbers in an array are graphed as a bar chart
--   The values of the array are also shown and updated in an HTML table below the bar chart
--   They are also accessible through a tooltip. Hover over the bar in question
+-   The values of the array are displayed and updated in an HTML table below the bar chart
+-   They are also accessible through a tooltip that displays the value when hovered over
 -   The Javascript Execution times are logged in Bootstrap 4 cards to allow comparison of different algorithm runtimes and for further information on the Big-O
 
 To Do:
@@ -59,5 +59,7 @@ $ python app.py
 $ export FLASK_APP=application.py
 $ flask run
 ```
+## 📐 Tests
+-   Add unit testing
 ## 🔒 License
 Copyright Notice and Statement: currently not offering any license. Permission only to view and download.
