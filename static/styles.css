@@ -30,16 +30,8 @@ p {
   writing-mode: vertical-rl;
   position: fixed;
   right: 0;
-}
-
-/* -------------------------------------- */
-
-/* Aglorithms NAV and DATA-STRUCTURES NAV */
-
-/* -------------------------------------- */
-
-.navbar-nav {
-  flex-direction: row;
+  margin-right: 1.5rem;
+  margin-top: 20%;
 }
 
 /* -------------------------------------- */
@@ -47,6 +39,14 @@ p {
 /* Aglorithms and DATA-STRUCTURES */
 
 /* -------------------------------------- */
+.break {
+  width: 100%;
+  flex-basis: 100%;
+  height: 0;
+  margin: 0;
+  border: 0
+}
+
 svg {
   margin: 0 auto;
   display: block;
