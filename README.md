@@ -10,7 +10,7 @@
 ## ▶️ Walkthrough on Youtube
 [<img src="img/youtube-thumbnail.png" width="100%">](https://youtu.be/rSeSffuw4Tg)
 
-## 🖥 [Live Application(https://dsa-visualization.herokuapp.com/)]
+## 🖥 [Live Application](https://dsa-visualization.herokuapp.com/)
 
 ## 💡Lessons Learned
 -   Searching and Sorting Algorithms
