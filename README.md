@@ -1,4 +1,4 @@
-# Algorithms Visualizer: Front-End Web App using D3
+# [Algorithms Visualizer: Front-End Web App using D3](https://dsa-visualization.herokuapp.com/)
 [![Maintainability](https://api.codeclimate.com/v1/badges/6536880fde9ad630e20e/maintainability)](https://codeclimate.com/github/JacobGrisham/Data-Structures-and-Algorithms-Visualizer/maintainability)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/75dcba64872d4cafb6d77c3cbe7a9030)](https://www.codacy.com/gh/JacobGrisham/Data-Structures-and-Algorithms-Visualizer/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JacobGrisham/Data-Structures-and-Algorithms-Visualizer&amp;utm_campaign=Badge_Grade)
 [![<JacobGrisham>](https://circleci.com/gh/JacobGrisham/Data-Structures-and-Algorithms-Visualizer.svg?style=svg)](https://app.circleci.com/pipelines/github/JacobGrisham/Data-Structures-and-Algorithms-Visualizer)
@@ -7,8 +7,10 @@
 -   The climax of this course is its final project. I chose to create a web-based searching and sorting algorithms visualization tool.
 -   My project video submission is hosted on CS50's [Gallery of Final Projects](https://cs50.harvard.edu/x/2021/gallery/)
 
-## 🖥 Walkthrough on Youtube
+## ▶️ Walkthrough on Youtube
 [<img src="img/youtube-thumbnail.png" width="100%">](https://youtu.be/rSeSffuw4Tg)
+
+## 🖥 [Live Application(https://dsa-visualization.herokuapp.com/)]
 
 ## 💡Lessons Learned
 -   Searching and Sorting Algorithms
