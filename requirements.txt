@@ -12,6 +12,6 @@ MarkupSafe==1.1.1
 pipenv==2020.8.13
 six==1.15.0
 SQLAlchemy==1.4.0b1
-virtualenv==20.0.34
+virtualenv==20.2.2
 virtualenv-clone==0.5.4
 Werkzeug==1.0.1
