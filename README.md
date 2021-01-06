@@ -10,7 +10,7 @@
 -   My project video submission is hosted on CS50's [Gallery of Final Projects](https://cs50.harvard.edu/x/2021/gallery/)
 
 ## ▶️ Walkthrough on Youtube
-[<img src="img/youtube-thumbnail.png" width="100%">](https://youtu.be/rSeSffuw4Tg)
+[<img src="static/images/youtube-thumbnail.png" width="100%">](https://youtu.be/rSeSffuw4Tg)
 
 ## 🖥 [Live Application](https://dsa-visualization.herokuapp.com/)
 
