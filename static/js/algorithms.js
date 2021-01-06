@@ -58,9 +58,6 @@ function stopPreviousAnimation() {
   animationStop = true;
 }
 
-// Convert input string to number
-function getIndex(num, input) {return num === parseInt(input, 10);}
-
 // --------------------------------------
 // Draw Graph
 // --------------------------------------
@@ -224,12 +221,10 @@ d3.select("#linear-search-form").on("submit", () => {
   for (let i = 0; i < n; i++){
     
     if (array[i] === parseInt(input, 10)) {
-      // Convert index number
-      getIndex(num, array[i]);
 
       // Color bar red if matched
       d3.selectAll(".bar")
-          .select("#bar_" + array.findIndex(getIndex))
+          .select("#bar_" + array.indexOf(array[i]))
           .transition()
           .delay(function(d, i) { return i * 10; })
           .style("fill", "red");
@@ -271,6 +266,9 @@ d3.select("#binary-search-form").on("submit", () => {
   // Obtain input from user
   let input = document.getElementById("binary-search-input").value;
 
+  // Convert to integer
+  let num = parseInt(input, 10);
+
   // Begin run-time stopwatch
   let start = window.performance.now();
 
@@ -288,13 +286,10 @@ d3.select("#binary-search-form").on("submit", () => {
 
     // If element is present at mid, return True 
     if (array[mid] === parseInt(input, 10)){
-        // // Convert input string to number
-        // function getInput(num) {return num === parseInt(input, 10);}
-        getIndex(num, input);
 
       // Color bar red if matched
       d3.selectAll(".bar")
-          .select("#bar_" + array.findIndex(getIndex))
+          .select("#bar_" + array.indexOf(array[mid]))
           .style("fill", "red");
       
       // Stop while loop
