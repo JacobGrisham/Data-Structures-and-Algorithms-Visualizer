@@ -39,7 +39,6 @@
 
 To Do:
 -   Add unit testing
--   Troubleshoot D3 responsiveness
 -   Allow user to specify the speed they want the algorithm to run
 -   Add more algorithms as I progress in my studies
 -   Expand upon the scope by incorporating data structure visualization and manipulation

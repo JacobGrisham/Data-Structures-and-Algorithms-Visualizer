@@ -45,6 +45,10 @@ section {
 
 /* -------------------------------------- */
 
+.navbar-nav {
+  flex-direction: row;
+}
+
 svg {
   margin: 0 auto;
   display: block;
@@ -67,6 +71,35 @@ svg {
   background-color: rgb(48, 48, 48);
   color: white;
 }
+
+.card-sizing {
+  width: auto;
+}
+
+@media only screen and (max-width: 1199.98px) {
+  .card-sizing {
+    width: 18rem;
+  }
+}
+
+@media only screen and (max-width: 991.98px) {
+  .card-sizing {
+    width: 14rem;
+  }
+}
+
+@media only screen and (max-width: 767.98px) {
+  .card-sizing {
+    width: 24rem;
+  }
+}
+
+@media only screen and (max-width: 575.98px) {
+  .card-sizing {
+    width: auto;
+  }
+}
+
 
 .list-group-item {
   background-color: rgb(38, 38, 38);

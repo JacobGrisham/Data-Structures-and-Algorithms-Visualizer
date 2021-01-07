@@ -7,8 +7,7 @@ const height = 600;
 const padding = 50;
 const barPadding = 1;
 const svg = d3.select("svg")
-              .attr("width", width)
-              .attr("height", height);
+                .attr("viewBox", `0 0 ${width} ${height}`)
 var array = [];
 const n = 100;
 var barWidth = width / n - barPadding;
@@ -42,7 +41,7 @@ function addCard(algorithm, end, start, bigO){
   d3.select("#runtimes")
   .append("div")
   .html(
-    `<div class="card mx-2" style="width: 18rem;">
+    `<div class="card mx-2 mb-2 card-sizing">
       <div class="card-body">
         <div class="card-header"> ${algorithm} Javascript Execution Time</div>
           <ul class="list-group list-group-flush">
@@ -74,8 +73,7 @@ var xScale = d3.scaleLinear()
                 .range([0, width]);
 
 var bars = d3.select("svg")
-                .attr("width", width)
-                .attr("height", height)
+                .attr("viewBox", `0 0 ${width} ${height}`)
                 .selectAll(".bar")
                 .data(array);
 
@@ -265,9 +263,6 @@ d3.select("#binary-search-form").on("submit", () => {
 
   // Obtain input from user
   let input = document.getElementById("binary-search-input").value;
-
-  // Convert to integer
-  let num = parseInt(input, 10);
 
   // Begin run-time stopwatch
   let start = window.performance.now();
