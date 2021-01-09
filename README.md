@@ -65,5 +65,9 @@ $ flask run
 ```
 ## 📐 Tests
 -   Add unit testing
+
+## 📣 Acknowledgments
+-   Application is kept awake from 6:00 a.m. to 11:59 p.m. PST with [Kaffeine](https://kaffeine.herokuapp.com/)
+
 ## 🔒 License
 Copyright Notice and Statement: currently not offering any license. Permission only to view and download.
