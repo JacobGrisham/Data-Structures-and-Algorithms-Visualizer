@@ -18,14 +18,17 @@
 -   Searching and Sorting Algorithms
 -   D3 Data Visualization
 -   Asynchronous Javascript
+-   Continuous Integration with CircleCI and Continuous Deployment with Heroku
+
+
 ## 🛠 Technologies
-|Front-End|Back-End|
-| ------- | ------ |
-|HTML5	  |Flask   |
-|CSS3		  |Python  |
-|Bootstrap 4|.     |
-|Javascript|.		   |
-|D3       |.       |
+|Front-End|Back-End|Deployment|
+| ------- | ------ | -------- |
+|HTML5	  |Flask   |CircleCI  |
+|CSS3		  |Python  |Heroku    |
+|Bootstrap 4|.     |.         |
+|Javascript|.		   |.         |
+|D3       |.       |.         |
 
 ## ⚖️ Methodology
 -   D3 Library for data visualization to both challenge myself with learning a new framework and because D3 is the ideal solution for data visualization problems
@@ -64,5 +67,9 @@ $ flask run
 ```
 ## 📐 Tests
 -   Add unit testing
+
+## 📣 Acknowledgments
+-   Application is kept awake from 6:00 a.m. to 11:59 p.m. PST with [Kaffeine](https://kaffeine.herokuapp.com/)
+
 ## 🔒 License
 Copyright Notice and Statement: currently not offering any license. Permission only to view and download.
