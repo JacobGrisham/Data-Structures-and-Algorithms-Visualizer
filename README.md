@@ -51,8 +51,7 @@ $ pipenv shell
 ```
 -   To install the dependencies
 ```
-$ pip install Flask
-$ pipenv install Flask
+$ pipenv install -r requirements.txt
 ```
 -   To start the web server, execute (without debugging):
 ```
