@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 flask = "*"
 gunicorn = "*"
+pip-upgrader = "*"
 
 [requires]
 python_version = "3.9"
