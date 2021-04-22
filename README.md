@@ -3,7 +3,7 @@
 ![Security Headers](https://img.shields.io/security-headers?url=https%3A%2F%2Fdsa-visualization.herokuapp.com%2F)
 [![Maintainability](https://api.codeclimate.com/v1/badges/6536880fde9ad630e20e/maintainability)](https://codeclimate.com/github/JacobGrisham/Data-Structures-and-Algorithms-Visualizer/maintainability)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/75dcba64872d4cafb6d77c3cbe7a9030)](https://www.codacy.com/gh/JacobGrisham/Data-Structures-and-Algorithms-Visualizer/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JacobGrisham/Data-Structures-and-Algorithms-Visualizer&amp;utm_campaign=Badge_Grade)
-[![<JacobGrisham>](https://circleci.com/gh/JacobGrisham/Data-Structures-and-Algorithms-Visualizer.svg?style=svg)](https://app.circleci.com/pipelines/github/JacobGrisham/Data-Structures-and-Algorithms-Visualizer)
+[![CircleCI](https://img.shields.io/circleci/build/github/JacobGrisham/Data-Structures-and-Algorithms-Visualizer)](https://app.circleci.com/pipelines/github/JacobGrisham/Data-Structures-and-Algorithms-Visualizer)
 [![Updates](https://pyup.io/repos/github/JacobGrisham/Data-Structures-and-Algorithms-Visualizer/shield.svg)](https://pyup.io/repos/github/JacobGrisham/Data-Structures-and-Algorithms-Visualizer/)
 [![Python 3](https://pyup.io/repos/github/JacobGrisham/Data-Structures-and-Algorithms-Visualizer/python-3-shield.svg)](https://pyup.io/repos/github/JacobGrisham/Data-Structures-and-Algorithms-Visualizer/)
 ## Final Project from [Harvard's Introduction to Computer Science CS50 hosted on eDX](https://www.edx.org/course/cs50s-introduction-to-computer-science)
@@ -11,7 +11,7 @@
 -   The climax of this course is its final project. I chose to create a web-based searching and sorting algorithms visualization tool.
 -   My project video submission is hosted on CS50's [Gallery of Final Projects](https://cs50.harvard.edu/x/2021/gallery/)
 
-## ▶️ Walkthrough on Youtube
+## 🎥 Walkthrough on Youtube
 [<img src="static/images/youtube-thumbnail.png" width="100%">](https://youtu.be/rSeSffuw4Tg)
 
 ## 💡Lessons Learned
