@@ -40,13 +40,8 @@
 -   They are also accessible through a tooltip that displays the value when hovered over
 -   The Javascript Execution times are logged in Bootstrap 4 cards to allow comparison of different algorithm runtimes and for further information on the Big-O
 
-To Do:
--   Add unit testing
--   Allow user to specify the speed they want the algorithm to run
--   Add more algorithms as I progress in my studies
--   Expand upon the scope by incorporating data structure visualization and manipulation
 ## 🚀 Getting Started
-To run this project locally:
+### To run this project on your system:
 -   In your terminal, navigate to the root project directory and run the following commands
 -   Activate the virtual environment
 ```
@@ -66,7 +61,6 @@ $ export FLASK_APP=application.py
 $ flask run
 ```
 ## 📐 Tests
--   Add unit testing
 
 ## 📣 Acknowledgments
 -   Application is kept awake from 6:00 a.m. to 11:59 p.m. PST with [Kaffeine](https://kaffeine.herokuapp.com/)
