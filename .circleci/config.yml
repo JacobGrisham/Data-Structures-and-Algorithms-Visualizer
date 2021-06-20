@@ -27,7 +27,6 @@ jobs:
       - run:
           name: Install Python Dependencies
           command:  |
-            pipenv shell
             pip install --user -r requirements.txt
       - save_cache:
           paths:
