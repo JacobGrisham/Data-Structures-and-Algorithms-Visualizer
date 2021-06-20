@@ -1,6 +1,8 @@
 version: 2.1
+
 orbs:
   jira: circleci/jira@1.3.0
+
 jobs:
   build:
     docker:
@@ -8,7 +10,27 @@ jobs:
     steps:
       - checkout
       - run:
+        name: Avoid Non-Deployment Updates
+        command: |
+            changes=`git show --name-only ${CIRCLE_SHA1} | tail -n +7`
+
+            if [ "$changes" = ".circleci/config.yml" ] || [ "$changes" = "README.md" ]; then
+              echo "Only found a configuration or documentation change. Stopping build"
+              circleci-agent step halt
+            fi
+      - restore_cache:
+          keys:
+            # when lock file changes, use increasingly general patterns to restore cache
+            - dsa-packages-v1-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+            - dsa-packages-v1-{{ .Branch }}-
+            - dsa-packages-v1-
+      - run:
           name: Install Python Dependencies
           command:  |
+            pipenv shell
             pip install --user -r requirements.txt
+      - save_cache:
+          paths:
+            - ~/.local/share/virtualenvs/venv  # this path depends on where pipenv creates a virtualenv
+          key: dsa-packages-v1-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
       - jira/notify
