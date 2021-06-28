@@ -298,10 +298,7 @@ function linearSearchAlgorithmVisualization() {AlgorithmVisualization(linearSear
 // Binary Search
 // --------------------------------------
 
-function binarySearch(event) {
-
-  // Prevent page refresh from form submission
-  event.preventDefault();
+function binarySearch() {
   
   // Obtain input from user
   let input = document.getElementById("binary-search-input").value;
