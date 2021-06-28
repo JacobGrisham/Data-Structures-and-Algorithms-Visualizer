@@ -1,4 +1,4 @@
-# [Algorithms Visualizer: Front-End Web App using D3](https://dsa-visualization.herokuapp.com/)
+# [Algorithms Visualizer: Front-End Web App using D3](https://www.big-o.app/)
 [![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://dsa-visualization.herokuapp.com/)
 ![Security Headers](https://img.shields.io/security-headers?url=https%3A%2F%2Fdsa-visualization.herokuapp.com%2F)
 [![Maintainability](https://api.codeclimate.com/v1/badges/6536880fde9ad630e20e/maintainability)](https://codeclimate.com/github/JacobGrisham/Data-Structures-and-Algorithms-Visualizer/maintainability)
