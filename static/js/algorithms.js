@@ -152,13 +152,22 @@ d3.select(window).on("load", drawGraph(array));
 d3.select(window).on("load", addTable(array));
 
 // --------------------------------------
+// Functional Programming
+// --------------------------------------
+
+function reset(method) {
+  method();
+  colorReset();
+  drawGraph(array);
+  addTable(array);
+}
+
+// --------------------------------------
 // Unsort
 // --------------------------------------
 
-d3.select("#unsort").on("click", () => {
-  // Prevent page from reloading
-  d3.event.preventDefault();
-
+function unsort() {
+  
   // Fisher-Yates Shuffling
   var m = array.length, t, i;
 
@@ -173,47 +182,89 @@ d3.select("#unsort").on("click", () => {
     array[m] = array[i];
     array[i] = t;
   }
+}
 
-  colorReset();
-  drawGraph(array);
-  addTable(array);
-});
+function unsortReset() { reset(unsort) }
 
 // --------------------------------------
 // New Data
 // --------------------------------------
 
-d3.select("#new-data").on("click", () => {
-  // Prevent page from reloading
-  d3.event.preventDefault();
-
+function newData() {
+  
   array = [];
 
   for (var i = 0; i < n; i++){
     array.push(getRandomInt(1000));
   }
+}
 
-  colorReset();
-  drawGraph(array);
-  addTable(array);
-});
+function newDataReset() { reset(newData) }
+
+// --------------------------------------
+// Object Oriented Programming (OOP)
+// --------------------------------------
+
+function AlgorithmObject(name, algorithm, bigO) {
+    // constructor functions
+    this.name = name;
+    this.algorithm = algorithm;
+    this.bigO = bigO;
+}
+
+// --------------------------------------
+// Functional Programming
+// --------------------------------------
+
+function AlgorithmVisualization(Algorithm) {
+
+    // Stop any animations
+    stopPreviousAnimation();
+
+    // Reset color of bars
+    colorReset();
+
+    // Begin run-time stopwatch
+    let start = window.performance.now();
+
+    // Run the algorithm visualization
+    Algorithm.algorithm();
+
+    // Commented out until I can solve the async/await puzzle
+    // // Create sorted array to compare against algorithm's array
+    // let sortedArray = array
+    // sortedArray.sort(function(a, b) {
+    //   return a - b;
+    // });
+
+    // function checkArrayEquality() {
+    //   JSON.stringify(sortedArray) == JSON.stringify(array) ? true : false
+    // }
+
+    // // End run-time stopwatch when the two arrays are equal
+    // async () => {
+
+    //   await checkArrayEquality();
+
+    //   let end = window.performance.now();
+    //   // Append new card with runtime
+    //   addCard(Algorithm.name, end, start, Algorithm.bigO);        
+    //   break;
+    // }
+
+    let end = window.performance.now();
+    // Append new card with runtime
+    addCard(Algorithm.name, end, start, Algorithm.bigO);
+
+}
 
 // --------------------------------------
 // Linear Search
 // --------------------------------------
-
-d3.select("#linear-search-form").on("submit", () => {
-  // Prevent page from reloading
-  d3.event.preventDefault();
-
-  // Reset color of bars
-  colorReset();
+function linearSearch() {
 
   // Obtain input from user
   let input = document.getElementById("linear-search-input").value;
-
-  // Begin run-time stopwatch
-  let start = window.performance.now();
 
   // Iterate over data
   for (let i = 0; i < n; i++){
@@ -238,39 +289,27 @@ d3.select("#linear-search-form").on("submit", () => {
           .style("fill", "grey");
     }
   }
+}
 
-  // End run-time stopwatch
-  let end = window.performance.now();
-
-  // Append new card with runtime
-  let linearSearch = "Linear Search";
-  let bigO = "Big-O O(n), Omega Ω(1)";
-  addCard(linearSearch, end, start, bigO);
-
-});
-
+const linearSearchAlgorithm = new AlgorithmObject("Linear Search", linearSearch, "Big-O O(n), Omega Ω(1)");
+function linearSearchAlgorithmVisualization() {AlgorithmVisualization(linearSearchAlgorithm) }
 
 // --------------------------------------
 // Binary Search
 // --------------------------------------
 
-d3.select("#binary-search-form").on("submit", () => {
-  // Prevent page from reloading
-  d3.event.preventDefault();
+function binarySearch(event) {
 
-  // Reset color of bars
-  colorReset();
-
+  // Prevent page refresh from form submission
+  event.preventDefault();
+  
   // Obtain input from user
   let input = document.getElementById("binary-search-input").value;
 
-  // Begin run-time stopwatch
-  let start = window.performance.now();
-
   function colorGrey(position){
     d3.selectAll(".bar")
-    .select("#bar_" + position)
-    .style("fill", "grey");
+      .select("#bar_" + position)
+      .style("fill", "grey");
   }
 
   let arrayStart = 0, arrayEnd = len - 1, i = 0;     
@@ -284,8 +323,8 @@ d3.select("#binary-search-form").on("submit", () => {
 
       // Color bar red if matched
       d3.selectAll(".bar")
-          .select("#bar_" + array.indexOf(array[mid]))
-          .style("fill", "red");
+        .select("#bar_" + array.indexOf(array[mid]))
+        .style("fill", "red");
       
       // Stop while loop
       i = n;
@@ -299,8 +338,6 @@ d3.select("#binary-search-form").on("submit", () => {
 
       // Increment i to prevent while loop
       i++;
-
-      // console.log("arrayStart", arrayStart)
     }
     else {
       // Look left of sorted array
@@ -309,38 +346,21 @@ d3.select("#binary-search-form").on("submit", () => {
         
       // Increment i to prevent while loop
       i++;
-
-      // console.log("arrayEnd", arrayEnd)
     }
   }
-   
-  // End run-time stopwatch
-  let end = window.performance.now();
+}
 
-  // Append new card with runtime
-  let binarySearch = "Binary Search";
-  let bigO = "Big-O O(log n), Omega Ω(1)";
-  addCard(binarySearch, end, start, bigO);
-  
-  drawGraph(array);
-  });
+const binarySearchAlgorithm = new AlgorithmObject("Binary Search", binarySearch, "Big-O O(log n), Omega Ω(1)");
+function binarySearchAlgorithmVisualization() { AlgorithmVisualization(binarySearchAlgorithm) }
 
 // --------------------------------------
 // Bubble Sort
 // --------------------------------------
 
-d3.select("#bubble-sort").on("click", () => {
-  // Prevent page from reloading
-  d3.event.preventDefault();
-
-  // Reset color of bars
-  colorReset();
-
+function bubbleSort() {
+  
   // Allow recursive animation
   animationStop = false;
-
-  // Begin run-time stopwatch
-  let start = window.performance.now();
 
   let swapped;
   do {
@@ -372,34 +392,19 @@ d3.select("#bubble-sort").on("click", () => {
       }, animationDuration);
     }
   } while (swapped);
+}
 
-  // End run-time stopwatch
-  let end = window.performance.now();
-
-  // Append new card with runtime
-  let bubbleSort = "Bubble Sort";
-  let bigO = "Big-O O(n squared), Omega Ω(n)";
-  addCard(bubbleSort, end, start, bigO);
-
-});
+const bubbleSortAlgorithm = new AlgorithmObject("Bubble Sort", bubbleSort, "Big-O O(n squared), Omega Ω(n)");
+function bubbleSortAlgorithmVisualization() { AlgorithmVisualization(bubbleSortAlgorithm) }
 
 // --------------------------------------
 // Selection Sort
 // --------------------------------------
-
-d3.select("#selection-sort").on("click", () => {
-  // Prevent page from reloading
-  d3.event.preventDefault();
-
-  // Reset color of bars
-  colorReset();
-
-  // Begin run-time stopwatch
-  let start = window.performance.now();
-  // Run Selection Sort Algorithm
-    // Iterate through the array
-    for (let i = 0; i < len; i++) {
-      setTimeout(() => {
+function selectionSort() {
+  
+  // Iterate through the array
+  for (let i = 0; i < len; i++) {
+    setTimeout(() => {
       let min = i;
       // Iterate through array one step ahead of previous iteration
       for (let j = i + 1; j < len; j++) {
@@ -417,33 +422,19 @@ d3.select("#selection-sort").on("click", () => {
           addTable(array);
         }
     }, animationDuration);
-    }
+  }
+}
 
-  // End run-time stopwatch
-  let end = window.performance.now();
-
-  // Append new card with runtime
-  let selectionSort = "Selection Sort";
-  let bigO = "Theta ϴ(n squared)";
-  addCard(selectionSort, end, start, bigO);
-});
-
+const selectionSortAlgorithm = new AlgorithmObject("Selection Sort", selectionSort, "Theta ϴ(n squared)");
+function selectionSortAlgorithmVisualization() { AlgorithmVisualization(selectionSortAlgorithm) }
 
 // --------------------------------------
 // Merge Sort
 // --------------------------------------
 
-d3.select("#merge-sort").on("click", () => {
-  // Prevent page from reloading
-  d3.event.preventDefault();
-
-  // Reset color of bars
-  colorReset();
-
-  // Begin run-time stopwatch
-  let start = window.performance.now();
-
-  function mergeSort (array) {
+function mergeSort() {
+  
+  function mergeSorting (array) {
     // Error handling
     if (array.length <= 1) {
       return array;
@@ -455,7 +446,7 @@ d3.select("#merge-sort").on("click", () => {
     const right = array.slice(middle);
 
     // Use recursion to combine the left and right
-    return merge(mergeSort(left), mergeSort(right));
+    return merge(mergeSorting(left), mergeSorting(right));
   }
 
   // Merge the two arrays: left and right
@@ -481,31 +472,18 @@ d3.select("#merge-sort").on("click", () => {
     .concat(right.slice(rightIndex));
   }
 
-  array = mergeSort(array);
+  array = mergeSorting(array);
+}
 
-  // End run-time stopwatch
-  let end = window.performance.now();
-
-  // Append new card with runtime
-  let mergeSorted = "Merge Sort";
-  let bigO = "Theta ϴ(n log n)";
-  addCard(mergeSorted, end, start, bigO);
-});
+const mergeSortAlgorithm = new AlgorithmObject("Merge Sort", mergeSort, "Theta ϴ(n log n)");
+function mergeSortAlgorithmVisualization() { AlgorithmVisualization(mergeSortAlgorithm) }
 
 // --------------------------------------
 // Insertion Sort
 // --------------------------------------
 
-d3.select("#insertion-sort").on("click", () => {
-  // Prevent page from reloading
-  d3.event.preventDefault();
-
-  // Reset color of bars
-  colorReset();
-
-  // Begin run-time stopwatch
-  let start = window.performance.now();
-
+function insertionSort() {
+  
   // Run Insertion Sort Algorithm
   for (let i = 1; i < len; i++) {
     setTimeout(() => {
@@ -522,12 +500,7 @@ d3.select("#insertion-sort").on("click", () => {
       array[j + 1] = key;
     }, animationDuration / 10);
   }
+}
 
-  // End run-time stopwatch
-  let end = window.performance.now();
-
-  // Append new card with runtime
-  let insertionSort = "Insertion Sort";
-  let bigO = "Big-O O(n squared), Omega Ω(n)";
-  addCard(insertionSort, end, start, bigO);
-});
+const insertionSortAlgorithm = new AlgorithmObject("Insertion Sort", insertionSort, "Big-O O(n squared), Omega Ω(n)");
+function insertionSortAlgorithmVisualization() { AlgorithmVisualization(insertionSortAlgorithm) }
