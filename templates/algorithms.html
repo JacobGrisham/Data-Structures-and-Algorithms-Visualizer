@@ -14,34 +14,34 @@
     <div class="collapse navbar-collapse justify-content-around" id="navbarSupportedContent">
       <ul class="navbar-nav flex-wrap justify-content-center justify-content-md-end">
         <li class="nav-item m-1">
-          <button onclick="stopPreviousAnimation()" id="unsort" class="btn btn-outline-light">Unsort</button>
+          <button onclick="unsortReset()" class="btn btn-outline-light">Unsort</button>
         </li>
         <li class="nav-item m-1">
-          <button onclick="stopPreviousAnimation()" id="new-data" class="btn btn-outline-light">New Data</button>
+          <button onclick="newDataReset()" class="btn btn-outline-light">New Data</button>
         </li>
         <li class="nav-item m-1">
-          <form class="form-inline" id="linear-search-form">
+          <form class="form-inline">
             <input id="linear-search-input" type="number" min="0" max="1000" aria-label="Search for number">
-            <button onclick="stopPreviousAnimation()" id="linear-search-button" class="btn btn-outline-light mx-1" type="submit">Linear Search</button>
+            <input class="btn btn-outline-light mx-1" type="button" onclick="linearSearchAlgorithmVisualization()" value="Linear Search"></input>
           </form>
         </li>
         <li class="nav-item m-1">
-          <form class="form-inline" id="binary-search-form">
+          <form class="form-inline">
             <input id="binary-search-input" type="number" min="0" max="1000" aria-label="Search for number">
-            <button onclick="stopPreviousAnimation()" id="binary-search-button" class="btn btn-outline-light mx-1" type="submit">Binary Search</button>
+            <input class="btn btn-outline-light mx-1" type="button" onclick="binarySearchAlgorithmVisualization()" value="Binary Search"></input>
           </form>
         </li>
         <li class="nav-item m-1">
-          <button id="bubble-sort" class="btn btn-outline-light">Bubble Sort</button>
+          <button onclick="bubbleSortAlgorithmVisualization()" class="btn btn-outline-light">Bubble Sort</button>
         </li>
         <li class="nav-item m-1">
-          <button onclick="stopPreviousAnimation()" id="selection-sort" class="btn btn-outline-light">Selection Sort</button>
+          <button onclick="selectionSortAlgorithmVisualization()" class="btn btn-outline-light">Selection Sort</button>
         </li>
         <li class="nav-item m-1">
-          <button onclick="stopPreviousAnimation()" id="merge-sort" class="btn btn-outline-light">Merge Sort</button>
+          <button onclick="mergeSortAlgorithmVisualization()" class="btn btn-outline-light">Merge Sort</button>
         </li>
         <li class="nav-item m-1">
-          <button onclick="stopPreviousAnimation()" id="insertion-sort" class="btn btn-outline-light">Insertion Sort</button>
+          <button onclick="insertionSortAlgorithmVisualization()" class="btn btn-outline-light">Insertion Sort</button>
         </li>
       </ul>
     </div>
