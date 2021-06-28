@@ -9,7 +9,7 @@
 -   My project video submission is hosted on CS50's [Gallery of Final Projects](https://cs50.harvard.edu/x/2021/gallery/)
 
 ## 🎥 Walkthrough on Youtube
-[<img src="src/images/youtube-thumbnail.png" width="100%">](https://youtu.be/rSeSffuw4Tg)
+[<img src="src/assets/images/youtube-thumbnail.png" width="100%">](https://youtu.be/rSeSffuw4Tg)
 
 ## 💡Lessons Learned
 -   Searching and Sorting Algorithms
