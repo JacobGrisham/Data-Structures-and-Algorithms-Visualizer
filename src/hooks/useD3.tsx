@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
 export const useD3 = (renderChartFn: any, dependencies: number[]) => {

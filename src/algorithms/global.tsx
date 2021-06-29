@@ -1,5 +1,4 @@
 import * as d3 from 'd3';
-
 export var array: number[] = [];
 export const n: number = 100;
 

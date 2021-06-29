@@ -45,7 +45,7 @@ function AlgorithmVisualization(Algorithm) {
   // Run the algorithm visualization
   Algorithm.algorithm();
 
-  // Commented out until I can solve the async/await puzzle
+  // Commented out until I can solve the async/await puzzle to more accurately calculate runtime
   // // Create sorted array to compare against algorithm's array
   // let sortedArray = array
   // sortedArray.sort(function(a, b) {
@@ -171,9 +171,6 @@ const bubbleSort = () => {
   // Allow recursive animation
   animationStop = false;
 
-  // Begin run-time stopwatch
-  let start = window.performance.now();
-
   let swapped;
   do {
     swapped = false;
@@ -194,7 +191,7 @@ const bubbleSort = () => {
 
           swapped = true;
 
-          drawGraph(array);
+          drawGraph(array, false);
           addTable(array);
         }
 
@@ -231,7 +228,7 @@ const selectionSort = () => {
           let tmp = array[i];
           array[i] = array[min];
           array[min] = tmp;
-          drawGraph(array);
+          drawGraph(array, false);
           addTable(array);
         }
     }, animationDuration);
@@ -270,12 +267,12 @@ const mergeSort = () => {
       if (left[leftIndex] < right[rightIndex]) {
         resultArray.push(left[leftIndex]);
         leftIndex++; // move left array cursor
-        drawGraph(resultArray);
+        drawGraph(resultArray, false);
         addTable(array);
       } else {
         resultArray.push(right[rightIndex]);
         rightIndex++; // move right array cursor
-        drawGraph(resultArray);
+        drawGraph(resultArray, false);
         addTable(array);
       }
   }
@@ -307,7 +304,7 @@ export const insertionSort = () => {
         // Swap values
           array[j + 1] = array[j];
           j = j - 1;
-          drawGraph(array);
+          drawGraph(array, false);
           addTable(array);
       }
       array[j + 1] = key;

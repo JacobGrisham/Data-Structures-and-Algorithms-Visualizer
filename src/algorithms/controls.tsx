@@ -1,5 +1,3 @@
-import * as d3 from 'd3';
-
 import { n, array, colorReset, getRandomInt } from './global';
 import { drawGraph } from './graph';
 import { addTable } from './table';
@@ -11,7 +9,7 @@ import { addTable } from './table';
 export function reset(method: any) {
   method();
   colorReset();
-  drawGraph(array);
+  drawGraph(array, true);
   addTable(array);
 }
 
@@ -45,7 +43,7 @@ export function unsortReset() { reset(unsort) }
 
 const newData: any = () => {
 
-  for (var i: number = 0; i < n; i++){
+  for (var j: number = 0; j < n; j++){
     array.pop();
   }
 
