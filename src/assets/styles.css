@@ -53,6 +53,7 @@ section {
 svg {
   margin: 0 auto;
   display: block;
+  max-height: 600px;
 }
 
 .bar {
@@ -60,7 +61,6 @@ svg {
 }
 
 .tooltip {
-  opacity: 0;
   position: absolute;
   pointer-events: none;
   color: white;
