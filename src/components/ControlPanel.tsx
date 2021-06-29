@@ -21,13 +21,13 @@ export default function ControlPanel() {
             <button onClick={ newDataReset } className="btn btn-outline-light">New Data</button>
           </li>
           <li className="nav-item m-1">
-            <form className="form-inline">
+            <form className="form-inline" onSubmit={(event) => { event.preventDefault();}}>
               <input id="linear-search-input" type="number" min="0" max="1000" aria-label="Search for number"></input>
               <input className="btn btn-outline-light mx-1" type="button" onClick={ linearSearchAlgorithmVisualization }value="Linear Search"></input>
             </form>
           </li>
           <li className="nav-item m-1">
-            <form className="form-inline">
+            <form className="form-inline" onSubmit={(event) => { event.preventDefault();}}>
               <input id="binary-search-input" type="number" min="0" max="1000" aria-label="Search for number"></input>
               <input className="btn btn-outline-light mx-1" type="button" onClick={ binarySearchAlgorithmVisualization } value="Binary Search"></input>
             </form>
