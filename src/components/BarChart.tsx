@@ -3,6 +3,7 @@ import { useD3 } from '../hooks/useD3';
 import { n, array } from "../algorithms/global";
 import { drawGraph } from '../algorithms/graph';
 import { addTable } from '../algorithms/table';
+import styles from '../assets/styles/graph.module.scss';
 
 
 export default function BarChart() {
@@ -15,8 +16,8 @@ export default function BarChart() {
     )
 
   return (
-    <div className="container">
-      <svg ref={ref}></svg>
-    </div>
+    <section>
+      <svg ref={ref} className={styles.graph}></svg>
+    </section>
   )
 }
