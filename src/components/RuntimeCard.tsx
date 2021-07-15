@@ -1,10 +1,11 @@
 import React from 'react';
+import styles from '../assets/styles/cards.module.scss';
 
 export default function RuntimeCard() {
 
   return (
-    <div className="container mt-5">
-      <div id="runtimes" className="row justify-content-center justify-content-lg-start"></div>
-    </div>
+    <section>
+      <div id="runtimes" className={styles.cards}></div>
+    </section>
   )
 }
