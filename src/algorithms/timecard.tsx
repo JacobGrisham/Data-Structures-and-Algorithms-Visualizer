@@ -5,7 +5,7 @@ export function addCard(algorithm: any, end: number, start: number, bigO: string
   d3.select("#runtimes")
   .append("div")
   .html(
-    `<div class="card mx-2 mb-2 card-sizing">
+    `<div class="card card-sizing">
       <div class="card-body">
         <div class="card-header"> ${algorithm} Javascript Execution Time</div>
           <ul class="list-group list-group-flush">
