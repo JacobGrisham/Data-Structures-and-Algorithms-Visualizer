@@ -1,51 +1,45 @@
 import React from 'react';
 import { unsortReset, newDataReset } from '../algorithms/controls';
 import { linearSearchAlgorithmVisualization, binarySearchAlgorithmVisualization, bubbleSortAlgorithmVisualization, selectionSortAlgorithmVisualization, mergeSortAlgorithmVisualization, insertionSortAlgorithmVisualization } from '../algorithms/algorithmsFn';
+import styles from '../assets/styles/navbar.module.scss';
 
 export default function ControlPanel() {
 
   return (
-    <nav className="navbar navbar-expand-xl navbar-dark">
-
-      <a href="/"className="navbar-brand"><button className="btn btn-outline-light">Home</button></a>
-      <button className="navbar-toggler btn-light" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span className="navbar-toggler-icon"></span>
-      </button>
-
-      <div className="collapse navbar-collapse justify-content-around" id="navbarSupportedContent">
-        <ul className="navbar-nav flex-wrap justify-content-center justify-content-md-end">
-          <li className="nav-item m-1">
-            <button onClick={ unsortReset } className="btn btn-outline-light">Unsort</button>
+    <nav className={styles.navbar}>
+      
+        <ul>
+          <li>
+            <button onClick={ unsortReset }>Unsort</button>
           </li>
-          <li className="nav-item m-1">
-            <button onClick={ newDataReset } className="btn btn-outline-light">New Data</button>
+          <li>
+            <button onClick={ newDataReset }>New Data</button>
           </li>
-          <li className="nav-item m-1">
-            <form className="form-inline" onSubmit={(event) => { event.preventDefault();}}>
+          <li>
+            <form onSubmit={(event) => { event.preventDefault();}}>
               <input id="linear-search-input" type="number" min="0" max="1000" aria-label="Search for number"></input>
-              <input className="btn btn-outline-light mx-1" type="button" onClick={ linearSearchAlgorithmVisualization }value="Linear Search"></input>
+              <button type="submit" onClick={ linearSearchAlgorithmVisualization }>Linear Search</button>
             </form>
           </li>
-          <li className="nav-item m-1">
-            <form className="form-inline" onSubmit={(event) => { event.preventDefault();}}>
+          <li>
+            <form onSubmit={(event) => { event.preventDefault();}}>
               <input id="binary-search-input" type="number" min="0" max="1000" aria-label="Search for number"></input>
-              <input className="btn btn-outline-light mx-1" type="button" onClick={ binarySearchAlgorithmVisualization } value="Binary Search"></input>
+              <button type="submit" onClick={ binarySearchAlgorithmVisualization }>Binary Search</button>
             </form>
           </li>
-          <li className="nav-item m-1">
-            <button onClick={ bubbleSortAlgorithmVisualization } className="btn btn-outline-light">Bubble Sort</button>
+          <li>
+            <button onClick={ bubbleSortAlgorithmVisualization }>Bubble Sort</button>
           </li>
-          <li className="nav-item m-1">
-            <button onClick={ selectionSortAlgorithmVisualization } className="btn btn-outline-light">Selection Sort</button>
+          <li>
+            <button onClick={ selectionSortAlgorithmVisualization }>Selection Sort</button>
           </li>
-          <li className="nav-item m-1">
-            <button onClick={ mergeSortAlgorithmVisualization } className="btn btn-outline-light">Merge Sort</button>
+          <li>
+            <button onClick={ mergeSortAlgorithmVisualization }>Merge Sort</button>
           </li>
-          <li className="nav-item m-1">
-            <button onClick={ insertionSortAlgorithmVisualization } className="btn btn-outline-light">Insertion Sort</button>
+          <li>
+            <button onClick={ insertionSortAlgorithmVisualization }>Insertion Sort</button>
           </li>
         </ul>
-      </div>
 
     </nav>
   );
