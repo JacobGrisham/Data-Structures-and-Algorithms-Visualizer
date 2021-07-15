@@ -1,0 +1,21 @@
+.table {
+  width: 90%;
+  margin-bottom: 1rem;
+  margin-right: auto;
+  margin-left: auto;
+  color: #fff;
+  background-color: #343a40;
+  border-collapse: collapse;
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  text-indent: initial;
+  border-spacing: 2px;
+  border-color: grey;
+
+  & td, & th {
+    padding: .75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+  }
+}

@@ -1,14 +1,13 @@
 import React from 'react';
+import styles from '../assets/styles/table.module.scss';
 
 export default function Table() {
 
   return (
-  <div className="container mt-5">
-    <div className="row mx-2">
-      <table className="table table-dark table-responsive">
+    <section>
+      <table className={styles.table}>
         <tbody><tr id="data"></tr></tbody>
       </table>
-    </div>
-  </div>
+    </section>
   )
 }
