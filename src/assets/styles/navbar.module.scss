@@ -34,7 +34,8 @@
     --border-width: 2px;
     --corner-value: 20px;
     --cropped-corner: polygon(100% 0, 100% calc(100% - var(--corner-value)), calc(100% - var(--corner-value)) 100%, 0 100%, 0 0);
-  
+    
+    cursor: pointer;
     background: transparent;
     color: inherit;
     padding: 1rem 2rem;

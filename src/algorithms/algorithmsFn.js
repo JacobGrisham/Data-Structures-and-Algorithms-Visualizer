@@ -20,11 +20,12 @@ const stopPreviousAnimation = () => {
 // Object Oriented Programming (OOP)
 // --------------------------------------
 
-function AlgorithmObject(name, algorithm, bigO) {
+function AlgorithmObject(name, algorithm, bigO, operationFormula) {
   // constructor functions
   this.name = name;
   this.algorithm = algorithm;
   this.bigO = bigO;
+  this.operationFormula = operationFormula;
 }
 
 // --------------------------------------
@@ -69,7 +70,7 @@ function AlgorithmVisualization(Algorithm) {
 
   let end = window.performance.now();
   // Append new card with runtime
-  addCard(Algorithm.name, end, start, Algorithm.bigO);
+  addCard(Algorithm.name, end, start, Algorithm.bigO, Algorithm.operationFormula);
 
 }
 
@@ -103,7 +104,7 @@ const linearSearch = () => {
   }
 }
 
-const linearSearchAlgorithm = new AlgorithmObject("Linear Search", linearSearch, "Big-O O(n), Omega Ω(1)");
+const linearSearchAlgorithm = new AlgorithmObject("Linear Search", linearSearch, "Big-O O(n), Omega Ω(1)", "");
 export function linearSearchAlgorithmVisualization() {AlgorithmVisualization(linearSearchAlgorithm) }
 
 // --------------------------------------
@@ -159,7 +160,7 @@ const binarySearch = () => {
   }
 }
 
-const binarySearchAlgorithm = new AlgorithmObject("Binary Search", binarySearch, "Big-O O(log n), Omega Ω(1)");
+const binarySearchAlgorithm = new AlgorithmObject("Binary Search", binarySearch, "Big-O O(log n), Omega Ω(1)", "");
 export function binarySearchAlgorithmVisualization() { AlgorithmVisualization(binarySearchAlgorithm) }
 
 // --------------------------------------
@@ -203,7 +204,7 @@ const bubbleSort = () => {
   } while (swapped);
 }
 
-const bubbleSortAlgorithm = new AlgorithmObject("Bubble Sort", bubbleSort, "Big-O O(n squared), Omega Ω(n)");
+const bubbleSortAlgorithm = new AlgorithmObject("Bubble Sort", bubbleSort, "Big-O O(n&#xb2), Omega Ω(n)", "");
 export function bubbleSortAlgorithmVisualization() { AlgorithmVisualization(bubbleSortAlgorithm) }
 
 // --------------------------------------
@@ -235,7 +236,7 @@ const selectionSort = () => {
   }
 }
 
-const selectionSortAlgorithm = new AlgorithmObject("Selection Sort", selectionSort, "Theta ϴ(n squared)");
+const selectionSortAlgorithm = new AlgorithmObject("Selection Sort", selectionSort, "Theta ϴ(n&#xb2)", "");
 export function selectionSortAlgorithmVisualization() { AlgorithmVisualization(selectionSortAlgorithm) }
 
 // --------------------------------------
@@ -285,7 +286,7 @@ const mergeSort = () => {
   array = mergeSorting(array);
 }
 
-const mergeSortAlgorithm = new AlgorithmObject("Merge Sort", mergeSort, "Theta ϴ(n log n)");
+const mergeSortAlgorithm = new AlgorithmObject("Merge Sort", mergeSort, "Theta ϴ(n log n)", "6nlog&#x2082n + 6n");
 export function mergeSortAlgorithmVisualization() { AlgorithmVisualization(mergeSortAlgorithm) }
 
 // --------------------------------------
@@ -312,5 +313,5 @@ export const insertionSort = () => {
   }
 }
 
-const insertionSortAlgorithm = new AlgorithmObject("Insertion Sort", insertionSort, "Big-O O(n squared), Omega Ω(n)");
+const insertionSortAlgorithm = new AlgorithmObject("Insertion Sort", insertionSort, "Big-O O(n&#xb2), Omega Ω(n)", "");
 export function insertionSortAlgorithmVisualization() { AlgorithmVisualization(insertionSortAlgorithm) } 
