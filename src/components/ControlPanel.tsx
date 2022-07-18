@@ -1,6 +1,6 @@
 import React from 'react';
 import { unsortReset, newDataReset } from '../algorithms/controls';
-import { linearSearchAlgorithmVisualization, binarySearchAlgorithmVisualization, bubbleSortAlgorithmVisualization, selectionSortAlgorithmVisualization, mergeSortAlgorithmVisualization, insertionSortAlgorithmVisualization } from '../algorithms/algorithmsFn';
+import { stopPreviousAnimation, linearSearchAlgorithmVisualization, binarySearchAlgorithmVisualization, bubbleSortAlgorithmVisualization, selectionSortAlgorithmVisualization, mergeSortAlgorithmVisualization, insertionSortAlgorithmVisualization } from '../algorithms/algorithmsFn';
 import styles from '../assets/styles/navbar.module.scss';
 
 export default function ControlPanel() {
@@ -10,10 +10,10 @@ export default function ControlPanel() {
       
         <ul>
           <li>
-            <button onClick={ unsortReset }>Unsort</button>
+            <button onClick={ () => {unsortReset(); stopPreviousAnimation(); } }>Unsort</button>
           </li>
           <li>
-            <button onClick={ newDataReset }>New Data</button>
+            <button onClick={ () => {newDataReset(); stopPreviousAnimation(); } }>New Data</button>
           </li>
           <li>
             <form onSubmit={(event) => { event.preventDefault();}}>

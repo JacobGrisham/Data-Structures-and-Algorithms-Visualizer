@@ -12,7 +12,7 @@ const animationDuration = 1000;
 var animationStop = false;
 
 // Stop previous animation from running otherwise setInterval won't stop and we'll have a memory-leak
-const stopPreviousAnimation = () => {
+export const stopPreviousAnimation = () => {
   animationStop = true;
 }
 
