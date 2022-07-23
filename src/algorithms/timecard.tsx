@@ -7,11 +7,20 @@ export function addCard(algorithm: any, end: number, start: number, bigO: string
   .html(
     `<div class="card card-sizing">
       <div class="card-body">
-        <div class="card-header"> ${algorithm} Javascript Execution Time</div>
+        <h3 class="card-header"> ${algorithm} Runtime</h3>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item"> ${end - start} ms </li>
-            <li class="list-group-item"> ${bigO} </li>
-            <li class="list-group-item"> ${operationFormula} </li>
+            <li class="list-group-item">
+              <h4>Asymptotic Analysis</h4>
+              <p>${bigO}</p>
+            </li>
+            <li class="list-group-item">
+              <h4>Runtime Formula</h4>
+              <p>${operationFormula}</p>
+            </li>
+            <li class="list-group-item">
+              <h4>Javascript Execution Time</h4>
+              <p>${end - start} ms</p>
+            </li>
           </ul>
       </div>
     </div>`
