@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 
 // Set initial data set size
-export var n: number = 1000;
+export var n: number = 100;
 
 // Create initial random number array
 export var array: number[] = [];
