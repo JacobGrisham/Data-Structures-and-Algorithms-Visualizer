@@ -1,9 +1,44 @@
+import React, { useState } from 'react';
 import { n } from '../algorithms/global';
 import { unsortReset, dataSizeReset } from '../algorithms/controls';
 import { stopPreviousAnimation, linearSearchAlgorithmVisualization, binarySearchAlgorithmVisualization, bubbleSortAlgorithmVisualization, selectionSortAlgorithmVisualization, mergeSortAlgorithmVisualization, insertionSortAlgorithmVisualization } from '../algorithms/algorithmsFn';
 import styles from '../assets/styles/navbar.module.scss';
 
 export default function ControlPanel() {
+
+  const dataSetSizes: number[] = [10,100,1000];
+  const algorithmSortFunctions = [
+    {
+      "name": "Bubble Sort",
+      "function": bubbleSortAlgorithmVisualization
+    },
+    {
+      "name": "Selection Sort",
+      "function": selectionSortAlgorithmVisualization
+    },
+    {
+      "name": "Merge Sort",
+      "function": mergeSortAlgorithmVisualization
+    },
+        {
+      "name": "Insertion Sort",
+      "function": insertionSortAlgorithmVisualization
+    },
+  ]
+  const algorithmSearchFunctions = [
+    {
+      "name": "Linear Search",
+      "function": linearSearchAlgorithmVisualization,
+      "id": "linear-search-input"
+    },
+    {
+      "name": "Binary Search",
+      "function": binarySearchAlgorithmVisualization,
+      "id": "binary-search-input"
+    }
+  ]
+
+  const [active, setActive] = useState(1);
 
   return (
     <nav className={styles.navbar}>
@@ -13,38 +48,31 @@ export default function ControlPanel() {
             <button onClick={ () => {unsortReset(); stopPreviousAnimation(); } }>Unsort</button>
           </li>
           <li>
-            <div>
-              <button className={styles.buttonGroup} onClick={ () => {dataSizeReset(10); stopPreviousAnimation(); } }>10</button>
-              <button className={styles.buttonGroup} onClick={ () => {dataSizeReset(100); stopPreviousAnimation(); } }>100</button>
-              <button className={styles.buttonGroup} onClick={ () => {dataSizeReset(1000); stopPreviousAnimation(); } }>1000</button>
+            <div className={styles.buttonGroup}>
+              {dataSetSizes.map((size, index) => {
+                return <button
+                        className={active === index ? styles.active : ''}
+                        onClick={() => {dataSizeReset(size); stopPreviousAnimation(); setActive(index)}}
+                        key={ index }>
+                          {size}
+                        </button>;
+              })}
             </div>
           </li>
-          <li>
-            <form onSubmit={(event) => { event.preventDefault();}}>
-              <input id="linear-search-input" type="number" min="0" max={n*10} aria-label="Search for number"></input>
-              <button type="submit" onClick={ linearSearchAlgorithmVisualization }>Linear Search</button>
-            </form>
-          </li>
-          <li>
-            <form onSubmit={(event) => { event.preventDefault();}}>
-              <input id="binary-search-input" type="number" min="0" max={n*10} aria-label="Search for number"></input>
-              <button type="submit" onClick={ binarySearchAlgorithmVisualization }>Binary Search</button>
-            </form>
-          </li>
-          <li>
-            <button onClick={ bubbleSortAlgorithmVisualization }>Bubble Sort</button>
-          </li>
-          <li>
-            <button onClick={ selectionSortAlgorithmVisualization }>Selection Sort</button>
-          </li>
-          <li>
-            <button onClick={ mergeSortAlgorithmVisualization }>Merge Sort</button>
-          </li>
-          <li>
-            <button onClick={ insertionSortAlgorithmVisualization }>Insertion Sort</button>
-          </li>
+          {algorithmSearchFunctions.map((algorithm) => {
+            return <li>
+                    <form key={ algorithm.id } onSubmit={(event) => { event.preventDefault();}}>
+                      <input id={algorithm.id} type="number" min="0" max={n*10} aria-label="Search for number"></input>
+                      <button type="submit" onClick={ algorithm.function }>{algorithm.name}</button>
+                    </form>
+                  </li>
+          })}
+          {algorithmSortFunctions.map((algorithm, index) => {
+            return <li>
+                    <button key={ index } onClick={ algorithm.function }>{algorithm.name}</button>
+                  </li>
+          })}
         </ul>
-
     </nav>
   );
 }

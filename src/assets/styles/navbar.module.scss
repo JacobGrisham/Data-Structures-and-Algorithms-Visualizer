@@ -30,8 +30,19 @@
     }
   }
 
-  & .buttonGroup {
+  & .buttonGroup > button {
     min-width: 4rem;
+  }
+
+  & .buttonGroup > button:not(button):last-child {
+    min-width: 4rem;
+    --cropped-corner: none;
+  }
+
+  & .active {
+    color: #060606;
+    background-color: rgb(230, 230, 230);
+    letter-spacing: 1px;
   }
 
   & button {
