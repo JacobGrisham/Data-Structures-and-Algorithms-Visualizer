@@ -1,5 +1,4 @@
-import React from 'react';
-import { unsortReset, newDataReset } from '../algorithms/controls';
+import { unsortReset, dataSizeReset } from '../algorithms/controls';
 import { stopPreviousAnimation, linearSearchAlgorithmVisualization, binarySearchAlgorithmVisualization, bubbleSortAlgorithmVisualization, selectionSortAlgorithmVisualization, mergeSortAlgorithmVisualization, insertionSortAlgorithmVisualization } from '../algorithms/algorithmsFn';
 import styles from '../assets/styles/navbar.module.scss';
 
@@ -13,7 +12,11 @@ export default function ControlPanel() {
             <button onClick={ () => {unsortReset(); stopPreviousAnimation(); } }>Unsort</button>
           </li>
           <li>
-            <button onClick={ () => {newDataReset(); stopPreviousAnimation(); } }>New Data</button>
+            <div>
+              <button className={styles.buttonGroup} onClick={ () => {dataSizeReset(10); stopPreviousAnimation(); } }>10</button>
+              <button className={styles.buttonGroup} onClick={ () => {dataSizeReset(100); stopPreviousAnimation(); } }>100</button>
+              <button className={styles.buttonGroup} onClick={ () => {dataSizeReset(1000); stopPreviousAnimation(); } }>1000</button>
+            </div>
           </li>
           <li>
             <form onSubmit={(event) => { event.preventDefault();}}>

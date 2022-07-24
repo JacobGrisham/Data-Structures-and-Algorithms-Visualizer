@@ -1,4 +1,4 @@
-import { n, array, colorReset, getRandomInt } from './global';
+import { n, array, colorReset, getRandomInt, changeDataSet } from './global';
 import { drawGraph } from './graph';
 import { addTable } from './table';
 
@@ -6,7 +6,7 @@ import { addTable } from './table';
 // Functional Programming
 // --------------------------------------
 
-export function reset(method: any) {
+export function reset(method?: any) {
   method();
   colorReset();
   drawGraph(array, true);
@@ -53,3 +53,14 @@ const newData: any = () => {
 }
 
 export function newDataReset() { reset(newData) }
+
+// --------------------------------------
+// Change Data Set Size
+// --------------------------------------
+
+export function dataSizeReset(dataSet: number) {
+  changeDataSet(dataSet);
+  colorReset();
+  drawGraph(array, false);
+  addTable(array);
+}

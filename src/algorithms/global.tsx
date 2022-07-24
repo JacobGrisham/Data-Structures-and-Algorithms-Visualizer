@@ -1,16 +1,28 @@
 import * as d3 from 'd3';
-export var array: number[] = [];
-export const n: number = 100;
+
+// Set initial data set size
+export var n: number = 1000;
 
 // Create initial random number array
+export var array: number[] = [];
 for (var i = 0; i < n; i++){
-  array.push(getRandomInt(1000));
+  array.push(getRandomInt(n*10));
 }
 export var len: number = array.length;
 
-// Random number generator
-export function getRandomInt(max: number) {
+// Generate random numbers
+export function getRandomInt(max: number):number {
   return Math.floor(Math.random() * Math.floor(max));
+}
+
+// Be able to change initial data set size
+export function changeDataSet(dataSet: number) {
+  n = dataSet;
+  array = [];
+  for (var i = 0; i < n; i++){
+    array.push(getRandomInt(n*10));
+  }
+  len = array.length;
 }
 
 // Reset color of bars

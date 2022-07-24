@@ -30,6 +30,10 @@
     }
   }
 
+  & .buttonGroup {
+    min-width: 4rem;
+  }
+
   & button {
     --border-width: 2px;
     --corner-value: 20px;

@@ -1,12 +1,12 @@
 import * as d3 from 'd3';
 import { n } from './global';
 
-const width: number = 600;
-const height: number = 600;
-const barPadding: number = 1;
-var barWidth: number = width / n - barPadding;
-
 export const drawGraph = (array : number[], reset: boolean) => {
+
+  const width: number = n === 1000 ? 1200 : 600;
+  const height: number = 600;
+  const barPadding: number = 1;
+  var barWidth: number = width / n - barPadding;
 
   // Create y-axis scale to ensure bars fit inside svg area and for calculating y and height attribute in rect
   var yScale: any = d3.scaleLinear()
