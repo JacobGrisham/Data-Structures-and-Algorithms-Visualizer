@@ -1,4 +1,3 @@
-import React from 'react';
 import { useD3 } from '../hooks/useD3';
 import { n, array } from "../algorithms/global";
 import { drawGraph } from '../algorithms/graph';

@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from '../assets/styles/cards.module.scss';
 
 export default function RuntimeCard() {

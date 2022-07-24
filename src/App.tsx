@@ -1,4 +1,3 @@
-import React, { Fragment } from 'react';
 import ControlPanel from './components/ControlPanel';
 import BarChart from './components/BarChart';
 import Tooltip from './components/Tooltip';
